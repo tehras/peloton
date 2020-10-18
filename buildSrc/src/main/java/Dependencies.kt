@@ -1,9 +1,9 @@
 @file:JvmName("Deps")
 
 object Versions {
-    const val composeVersion = "1.4.0-rc"
-    const val compose = "0.1.0-dev16"
-    const val kotlin = "1.4.0-rc"
+    const val composeVersion = "1.4.0"
+    const val compose = "1.0.0-alpha04"
+    const val kotlin = "1.4.10"
     const val targetSdk = 29
     const val buildVersion = "29.0.3"
 }
@@ -21,7 +21,7 @@ object Compose {
 }
 
 object Android {
-    const val appcompat = "androidx.appcompat:appcompat:1.1.0"
+    const val appcompat = "androidx.appcompat:appcompat:1.2.0"
 }
 
 object Kotlin {

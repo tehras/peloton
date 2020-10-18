@@ -7,14 +7,6 @@ plugins {
 apply(from = rootProject.file("gradle/configure-android.gradle"))
 apply(from = rootProject.file("gradle/configure-compose.gradle"))
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs =
-            freeCompilerArgs + listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check")
-    }
-}
-
 dependencies {
     implementation(Kotlin.stdLib)
 
