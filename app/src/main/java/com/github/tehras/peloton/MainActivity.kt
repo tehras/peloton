@@ -1,38 +1,28 @@
 package com.github.tehras.peloton
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Text
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.setContent
-import androidx.ui.tooling.preview.Preview
-import com.github.tehras.peloton.ui.PelotonTheme
+import androidx.lifecycle.SavedStateHandle
 
 class MainActivity : AppCompatActivity() {
+
+    /**
+     * We're using androidx instead of Koin here because [NavigationViewModel] requires
+     * [SavedStateHandle] which is not possible with Koin.
+     **/
+    private val navigationViewModel by viewModels<NavigationViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            PelotonTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
-            }
-        }
+
+        setContent { PelotonApp(navigationViewModel) }
     }
-}
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    PelotonTheme {
-        Greeting("Android")
+    override fun onBackPressed() {
+        if (!navigationViewModel.onBack()) {
+            super.onBackPressed()
+        }
     }
 }

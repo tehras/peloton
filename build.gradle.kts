@@ -1,16 +1,18 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
-    dependencies {
-        classpath("com.android.tools.build:gradle:4.2.0-alpha13")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
-    }
-
     repositories {
         google()
         jcenter()
         gradlePluginPortal()
         maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
+        maven { url = uri("https://plugins.gradle.org/m2/") }
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:4.2.0-alpha15")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
+        classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
     }
 }
 
