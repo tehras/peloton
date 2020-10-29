@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 
 @Composable
-fun HomeDataScreen(homeData: HomeData.Success) {
+fun HomeDataScreen(homeState: HomeState.Success) {
     Column {
-        HeaderArea(data = homeData.userData)
+        HeaderArea(data = homeState.userData)
     }
 }

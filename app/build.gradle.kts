@@ -25,6 +25,7 @@ dependencies {
     implementation(Koin.viewModel)
     implementation(Koin.scope)
     implementation(Kotlin.stdLib)
+    implementation(Kotlin.serialization)
 
     implementation(project(":data"))
 

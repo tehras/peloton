@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawShadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -26,7 +25,7 @@ fun HeaderArea(data: User) {
         elevation = 2.dp,
         modifier = Modifier.fillMaxWidth()
             .padding(4.dp)
-            .background(color = Color.White)
+            .background(color = MaterialTheme.colors.background)
             .padding(8.dp)
     ) {
         ConstraintLayout(modifier = Modifier.padding(8.dp)) {
@@ -89,7 +88,7 @@ fun Avatar(
         modifier = modifier
             .size(64.dp)
             .border(
-                border = BorderStroke(4.dp, color = Color.White),
+                border = BorderStroke(4.dp, color = MaterialTheme.colors.background),
                 shape = CircleShape
             )
             .drawShadow(
@@ -117,7 +116,7 @@ fun Tag(
                 clip = false
             )
             .background(
-                color = Color.White,
+                color = MaterialTheme.colors.background,
                 shape = CircleShape
             )
             .padding(top = 2.dp, bottom = 2.dp, start = 6.dp)

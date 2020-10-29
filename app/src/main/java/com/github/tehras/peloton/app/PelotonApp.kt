@@ -1,7 +1,8 @@
 package com.github.tehras.peloton.app
 
 import android.app.Application
-import com.github.tehras.data.di.overviewModule
+import com.github.tehras.data.di.apiModule
+import com.github.tehras.data.di.retrofitModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -17,7 +18,7 @@ class PelotonApp : Application() {
             androidContext(this@PelotonApp)
 
             // Init modules.
-            modules(viewModelsModule, overviewModule)
+            modules(viewModelsModule, apiModule, retrofitModule)
         }
     }
 }

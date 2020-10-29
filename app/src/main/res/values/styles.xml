@@ -8,5 +8,6 @@ For the colors used by the Composable functions, see Theme.kt -->
         <item name="colorPrimaryDark">@color/purple_700</item>
         <item name="colorAccent">@color/teal_200</item>
         <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:windowBackground">@color/background</item>
     </style>
 </resources>

@@ -1,6 +1,7 @@
 package com.github.tehras.peloton
 
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.annotation.MainThread
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -9,11 +10,15 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.github.tehras.peloton.home.Home
+import com.github.tehras.peloton.init.Initialize
 import com.github.tehras.peloton.utils.getMutableStateOf
 
-interface Screen {
+interface Screen : Parcelable {
+    val isTopScreen: Boolean
+        get() = true
+
     @Composable
-    fun compose()
+    fun compose(navigateTo: (Screen) -> Unit)
 }
 
 /**
@@ -64,7 +69,7 @@ class NavigationViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
      */
     var currentScreen: Screen by savedStateHandle.getMutableStateOf<Screen>(
         key = SIS_SCREEN,
-        default = Home,
+        default = Initialize,
         save = { it.toBundle() },
         restore = { it.toScreen() }
     )
@@ -78,7 +83,7 @@ class NavigationViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
      */
     @MainThread
     fun onBack(): Boolean {
-        val wasHandled = currentScreen !is Home
+        val wasHandled = !currentScreen.isTopScreen
         currentScreen = Home
         return wasHandled
     }

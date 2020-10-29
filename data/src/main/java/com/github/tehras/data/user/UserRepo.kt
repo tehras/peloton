@@ -1,4 +1,4 @@
-package com.github.tehras.data.overview
+package com.github.tehras.data.user
 
 import com.github.tehras.data.data.User
 

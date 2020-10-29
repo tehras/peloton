@@ -1,8 +1,10 @@
 plugins {
-    id("java-library")
-    id("kotlin")
+    id("com.android.library")
+    id("kotlin-android")
     kotlin("plugin.serialization")
 }
+
+apply(from = rootProject.file("gradle/configure-android.gradle"))
 
 dependencies {
     implementation(Koin.core)
