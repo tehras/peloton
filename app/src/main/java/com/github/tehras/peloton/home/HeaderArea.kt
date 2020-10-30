@@ -1,23 +1,17 @@
 package com.github.tehras.peloton.home
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.ConstraintLayout
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawShadow
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.transform.CircleCropTransformation
 import com.github.tehras.data.data.User
-import com.github.tehras.peloton.common.CoilImage
 
 @Composable
 fun HeaderArea(data: User) {
@@ -30,13 +24,13 @@ fun HeaderArea(data: User) {
     ) {
         ConstraintLayout(modifier = Modifier.padding(8.dp)) {
             // Create references.
-            val (avatar, name, location, tags) = createRefs()
+            val (avatar, name, location, tags, followers) = createRefs()
 
             Avatar(
                 url = data.image_url,
                 modifier = Modifier.constrainAs(avatar) {
                     top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
+                    bottom.linkTo(tags.bottom)
                     start.linkTo(parent.start)
                 }
             )
@@ -70,69 +64,19 @@ fun HeaderArea(data: User) {
                         top.linkTo(location.bottom)
                         start.linkTo(location.start)
                         end.linkTo(location.end)
-                        bottom.linkTo(parent.bottom)
                     }
                     .padding(vertical = 4.dp)
             )
-        }
-    }
-}
 
-@Composable
-fun Avatar(
-    url: String,
-    modifier: Modifier
-) {
-    CoilImage(
-        data = url,
-        modifier = modifier
-            .size(64.dp)
-            .border(
-                border = BorderStroke(4.dp, color = MaterialTheme.colors.background),
-                shape = CircleShape
-            )
-            .drawShadow(
-                elevation = 2.dp,
-                shape = CircleShape,
-                clip = false
-            )
-            .padding(2.dp)
-    ) {
-        transformations(CircleCropTransformation())
-    }
-}
-
-@Composable
-fun Tag(
-    tags: User.TagInfo,
-    modifier: Modifier
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .drawShadow(
-                elevation = 2.dp,
-                shape = CircleShape,
-                clip = false
-            )
-            .background(
-                color = MaterialTheme.colors.background,
-                shape = CircleShape
-            )
-            .padding(top = 2.dp, bottom = 2.dp, start = 6.dp)
-    ) {
-        Text(
-            text = tags.primary_name,
-            style = MaterialTheme.typography.body2,
-            fontStyle = FontStyle.Italic,
-            modifier = Modifier.padding(end = 4.dp)
-        )
-
-        if (tags.total_joined > 1) {
-            Text(
-                text = "+${tags.total_joined - 1}",
-                modifier = Modifier.padding(horizontal = 4.dp),
-                style = MaterialTheme.typography.body2,
+            Followers(
+                user = data,
+                modifier = Modifier
+                    .constrainAs(followers) {
+                        top.linkTo(tags.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                    }
             )
         }
     }

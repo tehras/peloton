@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Peloton</string>
-    <string name="enter_your_information">Log In</string>
-    <string name="username_label">Username</string>
+    <string name="enter_your_information">Authenticate using your Peloton account.</string>
+    <string name="username_label">Username or Email</string>
     <string name="password_label">Password</string>
     <string name="login_button">Login</string>
+    <string name="followers"><b>%d</b> followers</string>
+    <string name="following"><b>%d</b> following</string>
 </resources>

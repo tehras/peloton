@@ -8,6 +8,8 @@ data class User(
     val username: String,
     val location: String,
     val image_url: String,
+    val total_following: Int,
+    val total_followers: Int,
     val tags_info: TagInfo
 ) {
     @Serializable

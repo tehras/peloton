@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.github.tehras.peloton.R
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,8 +40,10 @@ fun EnterLoginInfoScreen(loginViewModel: LoginViewModel) {
 
         Text(
             text = stringResource(id = R.string.enter_your_information),
-            style = MaterialTheme.typography.h4.copy(color = MaterialTheme.colors.primary),
-            modifier = Modifier.padding(bottom = 16.dp)
+            style = MaterialTheme.typography.body2.copy(color = MaterialTheme.colors.secondary),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(bottom = 24.dp, start = 16.dp, end = 16.dp)
+                .align(Alignment.CenterHorizontally)
         )
         OutlinedTextField(
             label = { Text(text = stringResource(id = R.string.username_label)) },
@@ -67,6 +70,7 @@ fun EnterLoginInfoScreen(loginViewModel: LoginViewModel) {
             onValueChange = { passwordField = it }
         )
         TextButton(
+            modifier = Modifier.padding(top = 24.dp),
             onClick = {
                 loginViewModel.authenticate(
                     username = usernameField.text,
