@@ -1,6 +1,7 @@
 package com.github.tehras.peloton.home
 
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
@@ -14,7 +15,8 @@ import com.github.tehras.peloton.R
 @Composable
 fun Followers(
     user: User,
-    modifier: Modifier
+    modifier: Modifier,
+    followersClicked: () -> Unit
 ) {
     Column(modifier = modifier.padding(top = 8.dp)) {
         Divider()
@@ -26,6 +28,7 @@ fun Followers(
                 .padding(top = 12.dp, bottom = 8.dp)
         ) {
             Text(
+                modifier = Modifier.clickable(onClick = followersClicked),
                 style = MaterialTheme.typography.body2,
                 text = stringResource(id = R.string.followers, user.total_followers)
             )

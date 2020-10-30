@@ -1,5 +1,6 @@
 package com.github.tehras.peloton.app
 
+import com.github.tehras.peloton.followers.list.FollowersListViewModel
 import com.github.tehras.peloton.home.HomeViewModel
 import com.github.tehras.peloton.init.InitViewModel
 import com.github.tehras.peloton.login.LoginViewModel
@@ -12,4 +13,5 @@ val viewModelsModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { InitViewModel(get()) }
+    viewModel { FollowersListViewModel(get()) }
 }

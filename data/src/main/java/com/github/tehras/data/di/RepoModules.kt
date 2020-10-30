@@ -7,6 +7,8 @@ import com.github.tehras.data.auth.RealAuthRepo
 import com.github.tehras.data.client.RetrofitClient
 import com.github.tehras.data.client.RetrofitClient.AuthQualifier
 import com.github.tehras.data.client.RetrofitClient.UnauthQualifier
+import com.github.tehras.data.followers.FollowersRepo
+import com.github.tehras.data.followers.RealFollowersRepo
 import com.github.tehras.data.user.RealUserRepo
 import com.github.tehras.data.user.UserRepo
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -19,6 +21,7 @@ val apiModule = module {
 
     single<AuthRepo> { RealAuthRepo(get(), get()) }
     factory<UserRepo> { RealUserRepo(get(), get()) }
+    factory<FollowersRepo> { RealFollowersRepo(get(), get()) }
 }
 
 @ExperimentalSerializationApi
