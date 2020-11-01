@@ -1,29 +1,32 @@
-package com.github.tehras.peloton.workout
+package com.github.tehras.peloton.workout.details
 
-import androidx.compose.foundation.Text
+import androidx.compose.foundation.lazy.ExperimentalLazyDsl
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.shared.LoadingScreen
-import com.github.tehras.peloton.workout.WorkoutDetailsState.Loading
-import com.github.tehras.peloton.workout.WorkoutDetailsState.Success
+import com.github.tehras.peloton.workout.details.WorkoutDetailsState.Loading
+import com.github.tehras.peloton.workout.details.WorkoutDetailsState.Success
 import kotlinx.android.parcel.Parcelize
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.compose.inject
 
+@ExperimentalLazyDsl
+@ExperimentalCoroutinesApi
 @Composable
 fun WorkoutDetailsScreen(workoutId: String) {
     val viewModel: WorkoutDetailsViewModel by inject()
 
     val state: State<WorkoutDetailsState> =
-        viewModel.workoutDetailsState.collectAsState(initial = Loading)
+        viewModel.workoutDetails.collectAsState()
 
-    when (state.value) {
+    when (val data = state.value) {
         Loading -> {
             viewModel.fetchWorkoutDetails(workoutId = workoutId)
             LoadingScreen()
         }
-        is Success -> Text("Success")
+        is Success -> WorkoutDetailsSuccessScreen(data.workoutData)
     }
 }
 
@@ -32,6 +35,8 @@ data class WorkoutDetails(private val workoutId: String) : Screen {
     override val isTopScreen: Boolean
         get() = false
 
+    @ExperimentalLazyDsl
+    @ExperimentalCoroutinesApi
     @Composable
     override fun compose(navigateTo: (Screen) -> Unit) {
         WorkoutDetailsScreen(workoutId)

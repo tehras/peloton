@@ -1,6 +1,7 @@
 package com.github.tehras.data.workout
 
 import com.github.tehras.data.PelotonApi
+import com.github.tehras.data.data.WorkoutDetailsPerformanceResponse
 import com.github.tehras.data.data.WorkoutDetailsResponse
 import com.github.tehras.data.data.WorkoutsResponse
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,12 @@ class RealWorkoutRepo(
 
     override suspend fun fetchWorkoutDetails(workoutId: String): WorkoutDetailsResponse =
         withContext(Dispatchers.IO) {
+            pelotonApi.workoutPerformance(workoutId = workoutId)
             pelotonApi.workout(workoutId = workoutId)
+        }
+
+    override suspend fun fetchWorkoutPerformance(workoutId: String): WorkoutDetailsPerformanceResponse =
+        withContext(Dispatchers.IO) {
+            pelotonApi.workoutPerformance(workoutId = workoutId)
         }
 }

@@ -16,7 +16,7 @@ import com.github.tehras.peloton.followers.list.FollowingListScreen
 import com.github.tehras.peloton.home.HeaderArea
 import com.github.tehras.peloton.home.WorkoutArea
 import com.github.tehras.peloton.user.HomeBottomSheetState.*
-import com.github.tehras.peloton.workout.Workout
+import com.github.tehras.peloton.workout.list.Workout
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 

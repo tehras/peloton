@@ -1,4 +1,4 @@
-package com.github.tehras.peloton.workout
+package com.github.tehras.peloton.workout.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,7 +6,7 @@ import com.github.tehras.data.data.InstructorResponse
 import com.github.tehras.data.data.WorkoutsResponse
 import com.github.tehras.data.instructor.InstructorRepo
 import com.github.tehras.data.workout.WorkoutRepo
-import com.github.tehras.peloton.workout.WorkoutDisplayData.Companion.toDisplay
+import com.github.tehras.peloton.workout.list.WorkoutDisplayData.Companion.toDisplay
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.transform

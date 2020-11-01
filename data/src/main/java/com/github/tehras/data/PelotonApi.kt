@@ -34,8 +34,19 @@ interface PelotonApi {
 
     @GET("/api/workout/{workoutId}")
     suspend fun workout(
-        @Path("workoutId") workoutId: String
+        @Path("workoutId") workoutId: String,
+        @Query("joins") joins: String = "peloton"
     ): WorkoutDetailsResponse
+
+    @GET("/api/workout/{workoutId}/performance_graph")
+    suspend fun workoutPerformance(
+        @Path("workoutId") workoutId: String
+    ): WorkoutDetailsPerformanceResponse
+
+    @GET("/api/ride/{rideId}/details")
+    suspend fun rideDetails(
+        @Path("rideId") rideId: String
+    ): RideDetailsResponse
 
     @GET("/api/instructor")
     suspend fun instructors(

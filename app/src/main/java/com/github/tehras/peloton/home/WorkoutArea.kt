@@ -28,9 +28,8 @@ fun WorkoutArea(
     Card(
         elevation = 2.dp,
         modifier = Modifier.fillMaxWidth()
-            .padding(4.dp)
             .background(color = MaterialTheme.colors.background)
-            .padding(8.dp)
+            .padding(horizontal = 12.dp)
     ) {
         Column {
             Text(

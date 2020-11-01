@@ -1,4 +1,4 @@
-package com.github.tehras.peloton.workout
+package com.github.tehras.peloton.workout.list
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State

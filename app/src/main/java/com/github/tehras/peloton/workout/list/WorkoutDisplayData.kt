@@ -1,11 +1,10 @@
-package com.github.tehras.peloton.workout
+package com.github.tehras.peloton.workout.list
 
 import com.github.tehras.data.data.Instructor
 import com.github.tehras.data.data.Ride
 import com.github.tehras.data.data.Workout
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.math.roundToInt
+import com.github.tehras.peloton.utils.formatWork
+import com.github.tehras.peloton.utils.toDate
 
 /**
  * Data converted from [Workout] and [Instructor] list.
@@ -47,8 +46,3 @@ private fun List<Instructor>.findInstructor(ride: Ride): String? {
 
     return instructor?.name
 }
-
-private val dateFormatter = SimpleDateFormat("E M/d/yy '@' h:mm a", Locale.US)
-
-private fun Long.toDate(): String = dateFormatter.format(Date(this * 1000))
-private fun Double.formatWork(): String = (this / 1000.0).roundToInt().toString()

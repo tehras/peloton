@@ -92,9 +92,7 @@ class NavigationViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
             if (backStack.isNotEmpty()) backStack.removeLast()
 
             currentScreen = if (backStack.isNotEmpty()) {
-                backStack.last().also {
-                    backStack.remove(it)
-                }
+                backStack.last()
             } else {
                 Home
             }

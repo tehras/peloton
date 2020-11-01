@@ -1,4 +1,4 @@
-package com.github.tehras.peloton.workout
+package com.github.tehras.peloton.workout.list
 
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.github.tehras.peloton.R
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.home.Avatar
+import com.github.tehras.peloton.workout.details.WorkoutDetails
 
 @Composable
 fun WorkoutDataScreen(workoutsData: WorkoutsState.Success, navigateTo: (Screen) -> Unit) {
@@ -42,7 +43,7 @@ fun WorkoutDataScreen(workoutsData: WorkoutsState.Success, navigateTo: (Screen) 
 fun WorkoutItem(workout: WorkoutDisplayData, workoutSelected: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 2.dp)
+            .padding(horizontal = 12.dp, vertical = 2.dp)
             .clickable(onClick = workoutSelected)
     ) {
         ConstraintLayout(modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {

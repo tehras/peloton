@@ -14,4 +14,9 @@
     <string name="workout_work_value">kJ</string>
     <string name="workout_instructor_name">"%s · %s"</string>
     <string name="workout_air_time">From %s</string>
+    <string name="workout_details_leaderboard">/ %s</string>
+    <string name="workout_details_leaderboard_label">Leaderboard rank</string>
+    <string name="workout_details_achievements_empty">No new achievements</string>
+    <string name="workout_details_average_label">Average outputs</string>
+    <string name="workout_details_total_label">Total outputs</string>
 </resources>
