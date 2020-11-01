@@ -1,4 +1,4 @@
-package com.github.tehras.peloton.home
+package com.github.tehras.peloton.overview
 
 import androidx.compose.foundation.lazy.ExperimentalLazyDsl
 import androidx.compose.runtime.Composable
@@ -10,32 +10,40 @@ import com.github.tehras.peloton.user.UserScreen
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.asFlow
 import org.koin.androidx.compose.inject
 
-@ExperimentalLazyDsl
 @FlowPreview
 @ExperimentalCoroutinesApi
+@ExperimentalLazyDsl
 @Composable
-fun HomeScreen(navigateTo: (Screen) -> Unit) {
-    val homeViewModel: HomeViewModel by inject()
+fun OverviewScreen(
+    userId: String,
+    navigateTo: (Screen) -> Unit
+) {
+    val viewModel: OverviewViewModel by inject()
 
-    val state: State<HomeState> = homeViewModel.homeDataFlow.asFlow()
-        .collectAsState(initial = HomeState.Loading)
+    val state: State<OverviewState> = viewModel.userState
+        .collectAsState()
 
     when (val data = state.value) {
-        HomeState.Loading -> LoadingScreen()
-        is HomeState.Success -> UserScreen(data.userData, navigateTo)
+        OverviewState.Loading -> {
+            LoadingScreen()
+            viewModel.fetchData(userId = userId)
+        }
+        is OverviewState.Success -> UserScreen(data.user, navigateTo)
     }
 }
 
 @Parcelize
-object Home : Screen {
-    @ExperimentalLazyDsl
-    @FlowPreview
+data class Overview(val userId: String) : Screen {
+    override val isTopScreen: Boolean
+        get() = false
+
     @ExperimentalCoroutinesApi
+    @FlowPreview
+    @ExperimentalLazyDsl
     @Composable
     override fun compose(navigateTo: (Screen) -> Unit) {
-        HomeScreen(navigateTo)
+        OverviewScreen(userId, navigateTo)
     }
 }

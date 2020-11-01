@@ -16,7 +16,8 @@ import com.github.tehras.peloton.R
 fun Followers(
     user: User,
     modifier: Modifier,
-    followersClicked: () -> Unit
+    followersClicked: () -> Unit,
+    followingClicked: () -> Unit
 ) {
     Column(modifier = modifier.padding(top = 8.dp)) {
         Divider()
@@ -25,14 +26,19 @@ fun Followers(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 12.dp, bottom = 8.dp)
+                .padding(top = 4.dp)
         ) {
             Text(
-                modifier = Modifier.clickable(onClick = followersClicked),
+                modifier = Modifier
+                    .clickable(onClick = followersClicked)
+                    .padding(top = 8.dp, bottom = 8.dp),
                 style = MaterialTheme.typography.body2,
                 text = stringResource(id = R.string.followers, user.total_followers)
             )
             Text(
+                modifier = Modifier
+                    .clickable(onClick = followingClicked)
+                    .padding(top = 8.dp, bottom = 8.dp),
                 style = MaterialTheme.typography.body2,
                 text = stringResource(id = R.string.following, user.total_following)
             )

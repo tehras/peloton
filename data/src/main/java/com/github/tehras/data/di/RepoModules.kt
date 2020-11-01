@@ -9,8 +9,12 @@ import com.github.tehras.data.client.RetrofitClient.AuthQualifier
 import com.github.tehras.data.client.RetrofitClient.UnauthQualifier
 import com.github.tehras.data.followers.FollowersRepo
 import com.github.tehras.data.followers.RealFollowersRepo
+import com.github.tehras.data.instructor.InstructorRepo
+import com.github.tehras.data.instructor.RealInstructorRepo
 import com.github.tehras.data.user.RealUserRepo
 import com.github.tehras.data.user.UserRepo
+import com.github.tehras.data.workout.RealWorkoutRepo
+import com.github.tehras.data.workout.WorkoutRepo
 import kotlinx.serialization.ExperimentalSerializationApi
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -20,8 +24,10 @@ val apiModule = module {
     single { get<Retrofit>(UnauthQualifier).create(AuthApi::class.java) }
 
     single<AuthRepo> { RealAuthRepo(get(), get()) }
+    single<InstructorRepo> { RealInstructorRepo(get()) }
     factory<UserRepo> { RealUserRepo(get(), get()) }
-    factory<FollowersRepo> { RealFollowersRepo(get(), get()) }
+    factory<FollowersRepo> { RealFollowersRepo(get()) }
+    factory<WorkoutRepo> { RealWorkoutRepo(get()) }
 }
 
 @ExperimentalSerializationApi

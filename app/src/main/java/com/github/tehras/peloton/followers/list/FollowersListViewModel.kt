@@ -18,17 +18,19 @@ class FollowersListViewModel(
     private val followers = MutableSharedFlow<FollowersResponse>()
 
     val followersState
-        get() = followers
-            .transform<FollowersResponse, FollowersState> { followersResponse ->
-                emit(Success(followersResponse.followers))
-            }
+        get() = followers.transform<FollowersResponse, FollowersState> { followersResponse ->
+            emit(Success(followersResponse.followers))
+        }
 
-    fun fetchFollowers() {
-        // Fetch the initial batch.
+    fun fetchFollowers(userId: String) {
         viewModelScope.launch {
-            val result = followersRepo.fetchFollowers()
+            followers.emit(followersRepo.fetchFollowers(userId = userId))
+        }
+    }
 
-            followers.emit(result)
+    fun fetchFollowing(userId: String) {
+        viewModelScope.launch {
+            followers.emit(followersRepo.fetchFollowing(userId = userId))
         }
     }
 }

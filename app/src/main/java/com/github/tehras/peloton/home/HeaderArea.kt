@@ -14,7 +14,11 @@ import androidx.compose.ui.unit.dp
 import com.github.tehras.data.data.User
 
 @Composable
-fun HeaderArea(data: User, followersClicked: () -> Unit) {
+fun HeaderArea(
+    data: User,
+    followersClicked: () -> Unit,
+    followingClicked: () -> Unit
+) {
     Card(
         elevation = 2.dp,
         modifier = Modifier.fillMaxWidth()
@@ -77,7 +81,8 @@ fun HeaderArea(data: User, followersClicked: () -> Unit) {
                         end.linkTo(parent.end)
                         bottom.linkTo(parent.bottom)
                     },
-                followersClicked = followersClicked
+                followersClicked = followersClicked,
+                followingClicked = followingClicked
             )
         }
     }

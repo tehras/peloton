@@ -11,6 +11,10 @@ class RealUserRepo(
     private val authRepo: AuthRepo
 ) : UserRepo {
     override suspend fun fetchData(): User = withContext(Dispatchers.IO) {
-        pelotonApi.user(authRepo.authData()!!.user_id)
+        fetchData(authRepo.authData()!!.user_id)
+    }
+
+    override suspend fun fetchData(userId: String): User = withContext(Dispatchers.IO) {
+        pelotonApi.user(userId)
     }
 }

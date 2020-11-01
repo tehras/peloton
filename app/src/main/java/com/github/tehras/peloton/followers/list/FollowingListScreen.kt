@@ -18,7 +18,7 @@ import org.koin.androidx.compose.inject
 @ExperimentalCoroutinesApi
 @FlowPreview
 @Composable
-fun FollowersListScreen(
+fun FollowingListScreen(
     userId: String,
     navigateTo: (Screen) -> Unit
 ) {
@@ -29,12 +29,12 @@ fun FollowersListScreen(
 
     when (val data = state.value) {
         Loading -> {
-            followersListViewModel.fetchFollowers(userId = userId)
+            followersListViewModel.fetchFollowing(userId = userId)
             LoadingScreen()
         }
         is FollowersState.Success -> ListOfFollowers(
             data = data,
-            title = stringResource(id = R.string.followers_title)
+            title = stringResource(id = R.string.following_titles)
         ) { newUserId ->
             navigateTo(Overview(userId = newUserId))
         }

@@ -5,5 +5,13 @@
     <string name="password_label">Password</string>
     <string name="login_button">Login</string>
     <string name="followers"><b>%d</b> followers</string>
+    <string name="followers_title">Followers</string>
     <string name="following"><b>%d</b> following</string>
+    <string name="following_titles">Following</string>
+    <string name="workout_title"><b>%d</b> total workouts</string>
+    <string name="workout_list_title"><b>%d</b> workouts</string>
+    <string name="workout_view_all">View all workouts</string>
+    <string name="workout_work_value">kJ</string>
+    <string name="workout_instructor_name">"%s · %s"</string>
+    <string name="workout_air_time">From %s</string>
 </resources>

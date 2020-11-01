@@ -60,6 +60,9 @@ private fun Bundle.toScreen(): Screen {
  * hold the back stack state.
  */
 class NavigationViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
+    // Convert stack?
+    val backStack = mutableListOf<Screen>()
+
     /**
      * Hold the current screen in an observable, restored from savedStateHandle after process
      * death.
@@ -84,7 +87,18 @@ class NavigationViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     @MainThread
     fun onBack(): Boolean {
         val wasHandled = !currentScreen.isTopScreen
-        currentScreen = Home
+        if (wasHandled) {
+            // Pop the current item.
+            if (backStack.isNotEmpty()) backStack.removeLast()
+
+            currentScreen = if (backStack.isNotEmpty()) {
+                backStack.last().also {
+                    backStack.remove(it)
+                }
+            } else {
+                Home
+            }
+        }
         return wasHandled
     }
 
@@ -96,6 +110,11 @@ class NavigationViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
      */
     @MainThread
     fun navigateTo(screen: Screen) {
+        if (screen.isTopScreen) {
+            backStack.clear()
+        } else {
+            backStack += screen
+        }
         currentScreen = screen
     }
 }

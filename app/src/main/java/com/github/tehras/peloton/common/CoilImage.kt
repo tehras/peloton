@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.WithConstraints
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageAsset
 import androidx.compose.ui.graphics.asImageAsset
 import androidx.compose.ui.platform.ContextAmbient
@@ -24,7 +25,8 @@ import kotlinx.coroutines.*
 fun CoilImage(
     data: String,
     modifier: Modifier = Modifier,
-    customize: ImageRequest.Builder.() -> Unit = {}
+    colorFilter: ColorFilter? = null,
+    customize: ImageRequest.Builder .() -> Unit = {}
 ) = WithConstraints(modifier = modifier) {
     var width =
         if (constraints.maxWidth > Zero.width && constraints.maxWidth < Infinity.value.toInt()) {
@@ -102,7 +104,11 @@ fun CoilImage(
         }
     }
 
-    Image(modifier = modifier, asset = image.value)
+    Image(
+        modifier = modifier,
+        asset = image.value,
+        colorFilter = colorFilter
+    )
 }
 
 internal fun MutableState<ImageAsset>.update(
