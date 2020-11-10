@@ -13,6 +13,7 @@ import com.github.tehras.peloton.workout.list.WorkoutsState.Loading
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import java.util.*
 
 class WorkoutsViewModel(
     private val workoutRepo: WorkoutRepo,
@@ -20,18 +21,25 @@ class WorkoutsViewModel(
 ) : ViewModel() {
     val workoutsState = MutableStateFlow<WorkoutsState>(Loading)
 
-    fun fetchAllWorkouts(userId: String) {
+    fun fetchWorkouts(userId: String, workoutType: String?) {
         viewModelScope.launch {
-            workoutsState.emit(WorkoutsState.Loading)
+            workoutsState.emit(Loading)
 
             val workoutsResponse = async { safeApiCall { workoutRepo.fetchWorkouts(userId) } }
             val instructorsResponse = async { safeApiCall { instructorRepo.instructors() } }
 
-            workoutsState.emit(handleOutput(workoutsResponse.await(), instructorsResponse.await()))
+            workoutsState.emit(
+                handleOutput(
+                    workoutType,
+                    workoutsResponse.await(),
+                    instructorsResponse.await()
+                )
+            )
         }
     }
 
     private fun handleOutput(
+        workoutType: String?,
         workoutsResult: ResultWrapper<WorkoutsResponse>,
         instructorResponse: ResultWrapper<InstructorResponse>
     ): WorkoutsState {
@@ -45,7 +53,13 @@ class WorkoutsViewModel(
         return WorkoutsState.Success(
             totalCount = workoutsResult.value.count,
             workouts = workoutsResult.value.workouts
-                .filter { it.details != null }
+                .filter { workout ->
+                    val doesWorkoutTypeMatch = workoutType?.let {
+                        workout.fitness_discipline == it.toLowerCase(Locale.ROOT)
+                    } ?: true
+
+                    workout.details != null && doesWorkoutTypeMatch
+                }
                 .map {
                     it.toDisplay(instructors = instructorResponse.value.instructors)
                 }

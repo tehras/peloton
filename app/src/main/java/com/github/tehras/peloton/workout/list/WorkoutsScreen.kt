@@ -12,7 +12,11 @@ import org.koin.androidx.compose.inject
 
 @ExperimentalCoroutinesApi
 @Composable
-fun WorkoutScreen(userId: String, navigateTo: (Screen) -> Unit) {
+fun WorkoutScreen(
+    userId: String,
+    workout: String?,
+    navigateTo: (Screen) -> Unit
+) {
     val workoutsViewModel: WorkoutsViewModel by inject()
 
     val state: State<WorkoutsState> = workoutsViewModel.workoutsState
@@ -21,23 +25,26 @@ fun WorkoutScreen(userId: String, navigateTo: (Screen) -> Unit) {
     when (val data = state.value) {
         WorkoutsState.Loading -> {
             LoadingScreen()
-            workoutsViewModel.fetchAllWorkouts(userId = userId)
+            workoutsViewModel.fetchWorkouts(userId = userId, workoutType = workout)
         }
         is WorkoutsState.Success -> WorkoutDataScreen(data, navigateTo)
         is WorkoutsState.Error -> ErrorScreen(data.message) {
-            workoutsViewModel.fetchAllWorkouts(userId = userId)
+            workoutsViewModel.fetchWorkouts(userId = userId, workoutType = workout)
         }
     }
 }
 
 @Parcelize
-data class Workout(private val userId: String) : Screen {
+data class Workout(
+    private val userId: String,
+    private val workout: String? = null
+) : Screen {
     override val isTopScreen: Boolean
         get() = false
 
     @ExperimentalCoroutinesApi
     @Composable
     override fun compose(navigateTo: (Screen) -> Unit) {
-        WorkoutScreen(userId, navigateTo)
+        WorkoutScreen(userId, workout, navigateTo)
     }
 }

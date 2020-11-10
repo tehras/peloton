@@ -74,7 +74,8 @@ private fun HomeContent(
     )
     WorkoutArea(
         data = userData,
-        allWorkoutsClicked = { navigateTo(Workout(userData.id)) }
+        allWorkoutsClicked = { navigateTo(Workout(userData.id)) },
+        workoutClicked = { navigateTo(Workout(userData.id, it)) }
     )
 }
 

@@ -24,7 +24,7 @@ fun WorkoutDataScreen(workoutsData: WorkoutsState.Success, navigateTo: (Screen) 
                     Text(
                         text = stringResource(
                             id = R.string.workout_list_title,
-                            workoutsData.totalCount
+                            workoutsData.workouts.count()
                         ),
                         style = MaterialTheme.typography.h6,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp)

@@ -23,7 +23,8 @@ import com.github.tehras.peloton.common.LazyGridFor
 @Composable
 fun WorkoutArea(
     data: User,
-    allWorkoutsClicked: () -> Unit
+    allWorkoutsClicked: () -> Unit,
+    workoutClicked: (String) -> Unit
 ) {
     Card(
         elevation = 2.dp,
@@ -48,7 +49,15 @@ fun WorkoutArea(
                     .sortedWith(comparator),
                 rowSize = 3
             ) { workout ->
-                WorkoutItem(workout = workout)
+                val modifier = if (workout.count > 0) {
+                    Modifier.clickable(onClick = { workoutClicked(workout.name) })
+                } else {
+                    Modifier
+                }
+                WorkoutItem(
+                    modifier = modifier,
+                    workout = workout
+                )
             }
             Divider()
             Text(
@@ -67,10 +76,13 @@ fun WorkoutArea(
 }
 
 @Composable
-private fun WorkoutItem(workout: User.Workout) {
+private fun WorkoutItem(
+    modifier: Modifier = Modifier,
+    workout: User.Workout
+) {
     Column(
         horizontalAlignment = CenterHorizontally,
-        modifier = Modifier.padding(8.dp)
+        modifier = modifier.padding(8.dp)
             .fillMaxSize()
     ) {
         val nameFontWeight = if (workout.count == 0) {

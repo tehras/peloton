@@ -21,11 +21,14 @@ import com.github.tehras.peloton.utils.formatDecimal
 @Composable
 fun WorkoutLeaderboardAndAchievements(workout: WorkoutData) {
     LazyRow(
-        modifier = Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 4.dp),
+        modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         item {
             Leaderboard(workout = workout)
+        }
+        item {
+            Rating(workout = workout)
         }
         if (workout.workoutDetails.achievements.isNotEmpty()) {
             items(workout.workoutDetails.achievements) { achievement ->
@@ -41,8 +44,8 @@ fun WorkoutLeaderboardAndAchievements(workout: WorkoutData) {
 fun EmptyAchievements() {
     Card(
         modifier = Modifier
-            .padding(horizontal = 12.dp)
-            .preferredHeight(height = 80.dp)
+            .preferredHeight(height = 98.dp)
+            .padding(start = 4.dp, top = 4.dp, bottom = 4.dp)
     ) {
         Column(verticalArrangement = Arrangement.Center) {
             Text(
@@ -57,7 +60,8 @@ fun EmptyAchievements() {
 @Composable
 private fun Achievement(achievement: Achievement) {
     Card(
-        modifier = Modifier.preferredHeight(height = 80.dp).padding(start = 12.dp)
+        modifier = Modifier.preferredHeight(height = 98.dp)
+            .padding(start = 4.dp, top = 4.dp, bottom = 4.dp)
     ) {
         Column(
             modifier = Modifier
@@ -78,18 +82,54 @@ private fun Achievement(achievement: Achievement) {
 }
 
 @Composable
+private fun Rating(workout: WorkoutData) {
+    val rating = workout.workoutDetails.ride.difficulty_rating_avg
+    val count = workout.workoutDetails.ride.difficulty_rating_count
+
+    Card(
+        modifier = Modifier
+            .preferredHeight(height = 98.dp)
+            .padding(start = 4.dp, top = 4.dp, bottom = 4.dp)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(horizontal = 12.dp)
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = rating.formatDecimal(),
+                    style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold)
+                )
+                Text(
+                    modifier = Modifier.padding(start = 4.dp),
+                    text = stringResource(
+                        id = R.string.workout_details_rank, count.formatDecimal()
+                    ),
+                    style = MaterialTheme.typography.body2
+                )
+            }
+            Text(
+                text = stringResource(id = R.string.workout_details_rank_label),
+                style = MaterialTheme.typography.caption
+            )
+        }
+    }
+}
+
+@Composable
 private fun Leaderboard(workout: WorkoutData) {
     if (workout.workoutDetails.leaderboard_rank == null) return
 
     Card(
         modifier = Modifier
-            .preferredHeight(height = 80.dp)
-            .padding(start = 12.dp)
+            .preferredHeight(height = 98.dp)
+            .padding(start = 4.dp, top = 4.dp, bottom = 4.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(vertical = 12.dp, horizontal = 12.dp)
+            modifier = Modifier.padding(horizontal = 12.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
