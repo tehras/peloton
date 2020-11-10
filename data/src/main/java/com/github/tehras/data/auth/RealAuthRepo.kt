@@ -3,10 +3,11 @@ package com.github.tehras.data.auth
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import com.github.tehras.data.AuthApi
+import com.github.tehras.data.client.ResultWrapper
+import com.github.tehras.data.client.safeApiCall
 import com.github.tehras.data.data.AuthRequest
 import com.github.tehras.data.data.AuthResponse
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class RealAuthRepo(
     private val authApi: AuthApi,
@@ -36,7 +37,7 @@ class RealAuthRepo(
     override suspend fun login(
         username: String,
         password: String
-    ): AuthResponse = withContext(Dispatchers.IO) {
+    ): ResultWrapper<AuthResponse> = safeApiCall {
         authApi.authenticate(
             authRequest = AuthRequest(
                 username = username,

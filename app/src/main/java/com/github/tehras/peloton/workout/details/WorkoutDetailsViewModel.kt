@@ -2,6 +2,8 @@ package com.github.tehras.peloton.workout.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.tehras.data.client.ResultWrapper
+import com.github.tehras.data.client.safeApiCall
 import com.github.tehras.data.data.Instructor
 import com.github.tehras.data.data.InstructorResponse
 import com.github.tehras.data.data.WorkoutDetailsPerformanceResponse
@@ -23,43 +25,56 @@ class WorkoutDetailsViewModel(
     fun fetchWorkoutDetails(workoutId: String) {
         viewModelScope.launch {
             val workoutsResponse = async {
-                workoutRepo.fetchWorkoutDetails(workoutId)
+                safeApiCall { workoutRepo.fetchWorkoutDetails(workoutId) }
             }
             val workoutPerformance = async {
-                workoutRepo.fetchWorkoutPerformance(workoutId)
+                safeApiCall { workoutRepo.fetchWorkoutPerformance(workoutId) }
             }
             val instructorsResponse = async {
-                instructorRepo.instructors()
+                safeApiCall { instructorRepo.instructors() }
             }
 
             workoutDetails.emit(
-                Success(
-                    combineResponses(
-                        workoutsResponse.await(),
-                        workoutPerformance.await(),
-                        instructorsResponse.await()
-                    )
+                combineResponses(
+                    workoutsResponse.await(),
+                    workoutPerformance.await(),
+                    instructorsResponse.await()
                 )
             )
         }
     }
 
     private fun combineResponses(
-        workoutDetails: WorkoutDetailsResponse,
-        workoutPerformance: WorkoutDetailsPerformanceResponse,
-        instructors: InstructorResponse
-    ): WorkoutData {
-        return WorkoutData(
-            workoutDetails = workoutDetails,
-            workoutPerformance = workoutPerformance,
-            instructor = instructors.instructors.firstOrNull { it.id == workoutDetails.ride.instructor_id }
+        workoutDetails: ResultWrapper<WorkoutDetailsResponse>,
+        workoutPerformance: ResultWrapper<WorkoutDetailsPerformanceResponse>,
+        instructors: ResultWrapper<InstructorResponse>
+    ): WorkoutDetailsState {
+        if (workoutDetails !is ResultWrapper.Success<WorkoutDetailsResponse>) {
+            return WorkoutDetailsState.Error(message = workoutDetails.asErrorMessage())
+        }
+        if (workoutPerformance !is ResultWrapper.Success<WorkoutDetailsPerformanceResponse>) {
+            return WorkoutDetailsState.Error(message = workoutPerformance.asErrorMessage())
+        }
+        if (instructors !is ResultWrapper.Success<InstructorResponse>) {
+            return WorkoutDetailsState.Error(message = instructors.asErrorMessage())
+        }
+
+        val workoutData = WorkoutData(
+            workoutDetails = workoutDetails.value,
+            workoutPerformance = workoutPerformance.value,
+            instructor = instructors.value.instructors.firstOrNull {
+                it.id == workoutDetails.value.ride.instructor_id
+            }
         )
+
+        return Success(workoutData = workoutData)
     }
 }
 
 sealed class WorkoutDetailsState {
     object Loading : WorkoutDetailsState()
     data class Success(val workoutData: WorkoutData) : WorkoutDetailsState()
+    data class Error(val message: String) : WorkoutDetailsState()
 }
 
 data class WorkoutData(

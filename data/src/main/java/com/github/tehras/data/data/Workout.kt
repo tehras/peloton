@@ -26,18 +26,16 @@ data class Workout(
     val has_leaderboard_metrics: Boolean,
     val is_total_work_personal_record: Boolean,
     val name: String,
-    val peloton_id: String,
     val platform: String,
     val start_time: Long,
     val status: String,
     val timezone: String,
     val total_work: Double,
     val user_id: String,
-    val workout_type: String,
     val created: Long,
     val device_time_created_at: Long,
     @SerialName("peloton")
-    val details: Details
+    val details: Details?
 )
 
 @Serializable

@@ -67,7 +67,9 @@ private fun HomeContent(
 ) {
     HeaderArea(
         data = userData,
-        followersClicked = { homeBottomSheetState.value = Followers },
+        followersClicked = {
+            homeBottomSheetState.value = Followers
+        },
         followingClicked = { homeBottomSheetState.value = Following }
     )
     WorkoutArea(

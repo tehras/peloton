@@ -10,7 +10,7 @@ data class WorkoutDetailsResponse(
     val is_total_work_personal_record: Boolean,
     val status: String,
     val total_work: Double,
-    val leaderboard_rank: Int,
+    val leaderboard_rank: Int?,
     val total_leaderboard_users: Int,
     @SerialName("achievement_templates")
     val achievements: List<Achievement>,

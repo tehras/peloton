@@ -27,6 +27,8 @@ fun WorkoutDetailsOutputs(workout: WorkoutData) {
 
 @Composable
 private fun AverageOutputs(metrics: List<Metric>) {
+    if (metrics.isEmpty()) return
+
     Card(modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp).fillMaxWidth()) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(
@@ -46,6 +48,8 @@ private fun AverageOutputs(metrics: List<Metric>) {
 
 @Composable
 private fun TotalOutputs(summaries: List<Summary>) {
+    if (summaries.isEmpty()) return
+
     Card(modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp).fillMaxWidth()) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(

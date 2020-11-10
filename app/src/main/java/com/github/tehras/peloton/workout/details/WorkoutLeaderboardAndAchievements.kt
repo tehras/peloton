@@ -21,7 +21,7 @@ import com.github.tehras.peloton.utils.formatDecimal
 @Composable
 fun WorkoutLeaderboardAndAchievements(workout: WorkoutData) {
     LazyRow(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         item {
@@ -41,7 +41,7 @@ fun WorkoutLeaderboardAndAchievements(workout: WorkoutData) {
 fun EmptyAchievements() {
     Card(
         modifier = Modifier
-            .padding(horizontal = 4.dp, vertical = 4.dp)
+            .padding(horizontal = 12.dp)
             .preferredHeight(height = 80.dp)
     ) {
         Column(verticalArrangement = Arrangement.Center) {
@@ -57,12 +57,11 @@ fun EmptyAchievements() {
 @Composable
 private fun Achievement(achievement: Achievement) {
     Card(
-        modifier = Modifier
-            .padding(horizontal = 4.dp, vertical = 4.dp)
-            .preferredHeight(height = 80.dp)
+        modifier = Modifier.preferredHeight(height = 80.dp).padding(start = 12.dp)
     ) {
         Column(
-            modifier = Modifier.padding(vertical = 12.dp, horizontal = 12.dp),
+            modifier = Modifier
+                .padding(vertical = 12.dp, horizontal = 12.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -80,10 +79,12 @@ private fun Achievement(achievement: Achievement) {
 
 @Composable
 private fun Leaderboard(workout: WorkoutData) {
+    if (workout.workoutDetails.leaderboard_rank == null) return
+
     Card(
         modifier = Modifier
-            .padding(start = 12.dp, top = 4.dp, bottom = 4.dp)
             .preferredHeight(height = 80.dp)
+            .padding(start = 12.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -92,7 +93,7 @@ private fun Leaderboard(workout: WorkoutData) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "${workout.workoutDetails.leaderboard_rank.formatDecimal()} ",
+                    text = "${workout.workoutDetails.leaderboard_rank!!.formatDecimal()} ",
                     style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold)
                 )
                 Text(

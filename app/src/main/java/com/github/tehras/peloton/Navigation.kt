@@ -2,6 +2,7 @@ package com.github.tehras.peloton
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import androidx.annotation.MainThread
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -87,6 +88,7 @@ class NavigationViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     @MainThread
     fun onBack(): Boolean {
         val wasHandled = !currentScreen.isTopScreen
+        Log.e("TARAS", "$currentScreen - wasHandled $wasHandled")
         if (wasHandled) {
             // Pop the current item.
             if (backStack.isNotEmpty()) backStack.removeLast()

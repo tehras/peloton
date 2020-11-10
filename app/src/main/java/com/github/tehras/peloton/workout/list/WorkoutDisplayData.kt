@@ -23,16 +23,18 @@ data class WorkoutDisplayData(
 ) {
     companion object {
         fun Workout.toDisplay(instructors: List<Instructor>): WorkoutDisplayData {
+            val ride = details?.ride ?: error("details cannot be empty")
+
             return WorkoutDisplayData(
                 workoutId = id,
-                instructorId = details.ride.instructor_id,
-                instructorName = instructors.findInstructor(details.ride),
-                image = details.ride.image_url,
-                workoutName = details.ride.title,
+                instructorId = ride.instructor_id,
+                instructorName = instructors.findInstructor(ride),
+                image = ride.image_url,
+                workoutName = ride.title,
                 workoutEnergy = total_work.formatWork(),
                 workoutDate = start_time.toDate(),
-                scheduleDate = details.ride.scheduled_start_time.toDate(),
-                workoutType = details.ride.fitness_discipline_display_name,
+                scheduleDate = ride.scheduled_start_time.toDate(),
+                workoutType = ride.fitness_discipline_display_name,
                 isPersonalBest = is_total_work_personal_record
             )
         }

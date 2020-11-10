@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import com.github.tehras.peloton.Screen
+import com.github.tehras.peloton.shared.ErrorScreen
 import com.github.tehras.peloton.shared.LoadingScreen
 import com.github.tehras.peloton.workout.details.WorkoutDetailsState.Loading
 import com.github.tehras.peloton.workout.details.WorkoutDetailsState.Success
@@ -27,6 +28,9 @@ fun WorkoutDetailsScreen(workoutId: String) {
             LoadingScreen()
         }
         is Success -> WorkoutDetailsSuccessScreen(data.workoutData)
+        is WorkoutDetailsState.Error -> ErrorScreen(message = data.message) {
+            viewModel.fetchWorkoutDetails(workoutId = workoutId)
+        }
     }
 }
 

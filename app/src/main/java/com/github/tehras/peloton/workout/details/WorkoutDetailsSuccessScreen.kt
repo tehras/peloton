@@ -13,6 +13,7 @@ fun WorkoutDetailsSuccessScreen(
         WorkoutDetailsHeader(workout = workout)
         WorkoutLeaderboardAndAchievements(workout = workout)
         WorkoutDetailsOutputs(workout = workout)
+        WorkoutDetailsDescription(workout = workout)
     }
 }
 

@@ -19,4 +19,6 @@
     <string name="workout_details_achievements_empty">No new achievements</string>
     <string name="workout_details_average_label">Average outputs</string>
     <string name="workout_details_total_label">Total outputs</string>
+    <string name="retry">Retry</string>
+    <string name="workout_details_description_label">Class description</string>
 </resources>
