@@ -1,5 +1,6 @@
 package com.github.tehras.peloton.user
 
+import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.ExperimentalLazyDsl
 import androidx.compose.material.BottomDrawerLayout
@@ -9,10 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import com.github.tehras.data.data.CalendarResponse
 import com.github.tehras.data.data.User
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.followers.list.FollowersListScreen
 import com.github.tehras.peloton.followers.list.FollowingListScreen
+import com.github.tehras.peloton.home.CalendarArea
 import com.github.tehras.peloton.home.HeaderArea
 import com.github.tehras.peloton.home.WorkoutArea
 import com.github.tehras.peloton.user.HomeBottomSheetState.*
@@ -24,7 +27,11 @@ import kotlinx.coroutines.FlowPreview
 @FlowPreview
 @ExperimentalCoroutinesApi
 @Composable
-fun UserScreen(user: User, navigateTo: (Screen) -> Unit) {
+fun UserScreen(
+    user: User,
+    calendarResponse: CalendarResponse?,
+    navigateTo: (Screen) -> Unit
+) {
     val homeBottomSheetState = remember { mutableStateOf<HomeBottomSheetState>(Empty) }
     val drawerState = rememberBottomDrawerState(Closed) { newState ->
         when (newState) {
@@ -40,7 +47,7 @@ fun UserScreen(user: User, navigateTo: (Screen) -> Unit) {
         gesturesEnabled = homeBottomSheetState.value !is Empty,
         bodyContent = {
             Column {
-                HomeContent(user, homeBottomSheetState, navigateTo)
+                HomeContent(user, calendarResponse, homeBottomSheetState, navigateTo)
             }
         },
         drawerContent = {
@@ -62,21 +69,29 @@ fun UserScreen(user: User, navigateTo: (Screen) -> Unit) {
 @Composable
 private fun HomeContent(
     userData: User,
+    calendarResponse: CalendarResponse?,
     homeBottomSheetState: MutableState<HomeBottomSheetState>,
     navigateTo: (Screen) -> Unit
 ) {
-    HeaderArea(
-        data = userData,
-        followersClicked = {
-            homeBottomSheetState.value = Followers
-        },
-        followingClicked = { homeBottomSheetState.value = Following }
-    )
-    WorkoutArea(
-        data = userData,
-        allWorkoutsClicked = { navigateTo(Workout(userData.id)) },
-        workoutClicked = { navigateTo(Workout(userData.id, it)) }
-    )
+    ScrollableColumn {
+        HeaderArea(
+            data = userData,
+            followersClicked = {
+                homeBottomSheetState.value = Followers
+            },
+            followingClicked = { homeBottomSheetState.value = Following }
+        )
+        WorkoutArea(
+            data = userData,
+            allWorkoutsClicked = { navigateTo(Workout(userData.id)) },
+            workoutClicked = { navigateTo(Workout(userData.id, it)) }
+        )
+        if (calendarResponse != null) {
+            CalendarArea(
+                calendarData = calendarResponse
+            )
+        }
+    }
 }
 
 private sealed class HomeBottomSheetState {

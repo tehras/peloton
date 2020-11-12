@@ -23,4 +23,5 @@
     <string name="workout_details_total_label">Total outputs</string>
     <string name="retry">Retry</string>
     <string name="workout_details_description_label">Class description</string>
+    <string name="view_full_calendar_label">View full calendar</string>
 </resources>

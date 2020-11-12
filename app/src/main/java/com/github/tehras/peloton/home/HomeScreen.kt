@@ -25,7 +25,7 @@ fun HomeScreen(navigateTo: (Screen) -> Unit) {
 
     when (val data = state.value) {
         HomeState.Loading -> LoadingScreen()
-        is HomeState.Success -> UserScreen(data.userData, navigateTo)
+        is HomeState.Success -> UserScreen(data.userData, data.calendarData, navigateTo)
     }
 }
 

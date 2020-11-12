@@ -10,6 +10,7 @@ import com.github.tehras.peloton.user.UserScreen
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.asFlow
 import org.koin.androidx.compose.inject
 
 @FlowPreview
@@ -22,15 +23,15 @@ fun OverviewScreen(
 ) {
     val viewModel: OverviewViewModel by inject()
 
-    val state: State<OverviewState> = viewModel.userState
-        .collectAsState()
+    val state: State<OverviewState> = viewModel.overviewState.asFlow()
+        .collectAsState(initial = OverviewState.Loading)
 
     when (val data = state.value) {
         OverviewState.Loading -> {
             LoadingScreen()
             viewModel.fetchData(userId = userId)
         }
-        is OverviewState.Success -> UserScreen(data.user, navigateTo)
+        is OverviewState.Success -> UserScreen(data.userData, data.calendarData, navigateTo)
     }
 }
 

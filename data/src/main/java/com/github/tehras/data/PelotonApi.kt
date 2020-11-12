@@ -32,6 +32,11 @@ interface PelotonApi {
         @Query("sort_by") sortBy: String = "-created"
     ): WorkoutsResponse
 
+    @GET("/api/user/{userId}/calendar")
+    suspend fun calendar(
+        @Path("userId") userId: String
+    ): CalendarResponse
+
     @GET("/api/workout/{workoutId}")
     suspend fun workout(
         @Path("workoutId") workoutId: String,

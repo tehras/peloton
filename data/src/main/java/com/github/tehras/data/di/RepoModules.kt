@@ -11,8 +11,8 @@ import com.github.tehras.data.followers.FollowersRepo
 import com.github.tehras.data.followers.RealFollowersRepo
 import com.github.tehras.data.instructor.InstructorRepo
 import com.github.tehras.data.instructor.RealInstructorRepo
-import com.github.tehras.data.user.RealUserRepo
-import com.github.tehras.data.user.UserRepo
+import com.github.tehras.data.overview.RealOverviewRepo
+import com.github.tehras.data.overview.OverviewRepo
 import com.github.tehras.data.workout.RealWorkoutRepo
 import com.github.tehras.data.workout.WorkoutRepo
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -25,7 +25,7 @@ val apiModule = module {
 
     single<AuthRepo> { RealAuthRepo(get(), get()) }
     single<InstructorRepo> { RealInstructorRepo(get()) }
-    factory<UserRepo> { RealUserRepo(get(), get()) }
+    factory<OverviewRepo> { RealOverviewRepo(get(), get()) }
     factory<FollowersRepo> { RealFollowersRepo(get()) }
     factory<WorkoutRepo> { RealWorkoutRepo(get()) }
 }

@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.github.tehras.data.data.User
 import com.github.tehras.peloton.R
 import com.github.tehras.peloton.common.CoilImage
-import com.github.tehras.peloton.common.LazyGridFor
+import com.github.tehras.peloton.common.Grid
 
 @Composable
 fun WorkoutArea(
@@ -44,9 +44,8 @@ fun WorkoutArea(
             Divider()
             val comparator = compareByDescending<User.Workout> { it.count }
                 .thenBy { it.name }
-            LazyGridFor(
-                data = data.workouts
-                    .sortedWith(comparator),
+            Grid(
+                data = data.workouts.sortedWith(comparator),
                 rowSize = 3
             ) { workout ->
                 val modifier = if (workout.count > 0) {

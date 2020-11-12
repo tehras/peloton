@@ -2,19 +2,30 @@ package com.github.tehras.peloton.overview
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.tehras.data.data.CalendarResponse
 import com.github.tehras.data.data.User
-import com.github.tehras.data.user.UserRepo
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.github.tehras.data.overview.OverviewRepo
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
 class OverviewViewModel(
-    private val userRepo: UserRepo
+    private val overviewRepo: OverviewRepo
 ) : ViewModel() {
-    val userState = MutableStateFlow<OverviewState>(OverviewState.Loading)
+    val overviewState = ConflatedBroadcastChannel<OverviewState>()
 
     fun fetchData(userId: String) {
         viewModelScope.launch {
-            userState.emit(OverviewState.Success(userRepo.fetchData(userId)))
+            val userData = overviewRepo.fetchData(userId = userId)
+            val calendarData = overviewRepo.fetchCalendar(userId = userId)
+
+            overviewState.send(
+                OverviewState.Success(
+                    userData = userData,
+                    calendarData = calendarData
+                )
+            )
         }
     }
 }
@@ -22,6 +33,7 @@ class OverviewViewModel(
 sealed class OverviewState {
     object Loading : OverviewState()
     data class Success(
-        val user: User
+        val userData: User,
+        val calendarData: CalendarResponse
     ) : OverviewState()
 }
