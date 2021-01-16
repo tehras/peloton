@@ -1,12 +1,12 @@
 package com.github.tehras.peloton.home
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +26,8 @@ fun CalendarArea(
 ) {
     Card(
         elevation = 2.dp,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .background(color = MaterialTheme.colors.background)
     ) {
@@ -45,7 +46,9 @@ fun CalendarArea(
 @Composable
 private fun CalendarViewFullLabel() {
     Divider()
-    Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 12.dp)) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 8.dp, vertical = 12.dp)) {
         Text(
             text = stringResource(id = R.string.view_full_calendar_label),
             style = MaterialTheme.typography.body2
@@ -67,7 +70,8 @@ private fun CalendarTitle(monthsToShow: List<Month>) {
     }
 
     Row(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 12.dp)
     ) {
         Text(
@@ -164,7 +168,7 @@ private fun RowScope.CalendarItem(text: String?, isActive: Boolean = false) {
                     color = if (isActive) MaterialTheme.colors.secondary else Color.Transparent,
                     shape = CircleShape
                 ),
-            alignment = Alignment.Center
+            contentAlignment = Alignment.Center
         ) {
             if (text != null) {
                 Text(

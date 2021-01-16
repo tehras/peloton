@@ -7,11 +7,11 @@ import androidx.annotation.Px
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.WithConstraints
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ImageAsset
-import androidx.compose.ui.graphics.asImageAsset
-import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.WithConstraints
+import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.unit.Dp.Companion.Infinity
 import androidx.compose.ui.unit.IntSize.Companion.Zero
 import androidx.core.graphics.drawable.toBitmap
@@ -46,9 +46,9 @@ fun CoilImage(
     if (width == -1) width = height
     if (height == -1) height = width
 
-    val context = ContextAmbient.current
+    val context = AmbientContext.current
     var animationJob: Job? = remember { null }
-    val image = remember { mutableStateOf(ImageAsset(width, height)) }
+    val image = remember { mutableStateOf(ImageBitmap(width, height)) }
 
     onCommit(data, width, height, context) {
         val target = object : Target {
@@ -98,20 +98,20 @@ fun CoilImage(
         val requestDisposable = Coil.imageLoader(context).enqueue(request)
 
         onDispose {
-            image.value = ImageAsset(width = width, height = height)
+            image.value = ImageBitmap(width = width, height = height)
             requestDisposable.dispose()
             animationJob?.cancel()
         }
     }
 
     Image(
+        bitmap = image.value,
         modifier = modifier,
-        asset = image.value,
         colorFilter = colorFilter
     )
 }
 
-internal fun MutableState<ImageAsset>.update(
+internal fun MutableState<ImageBitmap>.update(
     drawable: Drawable,
     @Px width: Int? = null,
     @Px height: Int? = null
@@ -124,7 +124,7 @@ internal fun MutableState<ImageAsset>.update(
                 val asset = drawable.toBitmap(
                     width = width ?: drawable.intrinsicWidth,
                     height = height ?: drawable.intrinsicHeight
-                ).asImageAsset()
+                ).asImageBitmap()
 
                 withContext(Dispatchers.Main) { value = asset }
                 delay(16)
@@ -134,8 +134,7 @@ internal fun MutableState<ImageAsset>.update(
         value = drawable.toBitmap(
             width = width ?: drawable.intrinsicWidth,
             height = height ?: drawable.intrinsicHeight
-        )
-            .asImageAsset()
+        ).asImageBitmap()
         return null
     }
 }

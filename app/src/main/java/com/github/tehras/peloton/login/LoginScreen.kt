@@ -2,20 +2,18 @@ package com.github.tehras.peloton.login
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.focus.ExperimentalFocus
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.home.Home
-import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import org.koin.androidx.compose.inject
+import kotlinx.parcelize.Parcelize
+import org.koin.androidx.compose.getViewModel
 
 @ExperimentalMaterialApi
-@ExperimentalFocus
 @ExperimentalCoroutinesApi
 @Composable
 fun LoginScreen(navigateToHome: () -> Unit) {
-    val loginViewModel: LoginViewModel by inject()
+    val loginViewModel: LoginViewModel = getViewModel()
 
     EnterLoginInfoScreen(
         loginViewModel = loginViewModel,
@@ -26,11 +24,10 @@ fun LoginScreen(navigateToHome: () -> Unit) {
 @Parcelize
 object Login : Screen {
     @ExperimentalMaterialApi
-    @ExperimentalFocus
     @FlowPreview
     @ExperimentalCoroutinesApi
     @Composable
-    override fun compose(navigateTo: (Screen) -> Unit) {
+    override fun Compose(navigateTo: (Screen) -> Unit) {
         LoginScreen { navigateTo(Home) }
     }
 }

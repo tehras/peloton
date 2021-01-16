@@ -1,9 +1,8 @@
 package com.github.tehras.peloton.workout.list
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnForIndexed
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,23 +17,25 @@ import com.github.tehras.peloton.workout.details.WorkoutDetails
 @Composable
 fun WorkoutDataScreen(workoutsData: WorkoutsState.Success, navigateTo: (Screen) -> Unit) {
     Column {
-        LazyColumnForIndexed(items = workoutsData.workouts) { index, workout ->
-            if (index == 0) {
-                Surface(contentColor = contentColorFor(color = MaterialTheme.colors.surface)) {
-                    Text(
-                        text = stringResource(
-                            id = R.string.workout_list_title,
-                            workoutsData.workouts.count()
-                        ),
-                        style = MaterialTheme.typography.h6,
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp)
-                    )
+        LazyColumn {
+            itemsIndexed(items = workoutsData.workouts) { index, workout ->
+                if (index == 0) {
+                    Surface(contentColor = contentColorFor(color = MaterialTheme.colors.surface)) {
+                        Text(
+                            text = stringResource(
+                                id = R.string.workout_list_title,
+                                workoutsData.workouts.count()
+                            ),
+                            style = MaterialTheme.typography.h6,
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp)
+                        )
+                    }
                 }
+                WorkoutItem(
+                    workout = workout,
+                    workoutSelected = { navigateTo(WorkoutDetails(workoutId = workout.workoutId)) }
+                )
             }
-            WorkoutItem(
-                workout = workout,
-                workoutSelected = { navigateTo(WorkoutDetails(workoutId = workout.workoutId)) }
-            )
         }
     }
 }
@@ -42,7 +43,8 @@ fun WorkoutDataScreen(workoutsData: WorkoutsState.Success, navigateTo: (Screen) 
 @Composable
 fun WorkoutItem(workout: WorkoutDisplayData, workoutSelected: () -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 2.dp)
             .clickable(onClick = workoutSelected)
     ) {

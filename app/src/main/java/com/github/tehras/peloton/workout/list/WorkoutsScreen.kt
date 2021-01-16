@@ -6,9 +6,9 @@ import androidx.compose.runtime.collectAsState
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.shared.ErrorScreen
 import com.github.tehras.peloton.shared.LoadingScreen
-import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.koin.androidx.compose.inject
+import kotlinx.parcelize.Parcelize
+import org.koin.androidx.compose.getViewModel
 
 @ExperimentalCoroutinesApi
 @Composable
@@ -17,7 +17,7 @@ fun WorkoutScreen(
     workout: String?,
     navigateTo: (Screen) -> Unit
 ) {
-    val workoutsViewModel: WorkoutsViewModel by inject()
+    val workoutsViewModel: WorkoutsViewModel = getViewModel()
 
     val state: State<WorkoutsState> = workoutsViewModel.workoutsState
         .collectAsState()
@@ -44,7 +44,7 @@ data class Workout(
 
     @ExperimentalCoroutinesApi
     @Composable
-    override fun compose(navigateTo: (Screen) -> Unit) {
+    override fun Compose(navigateTo: (Screen) -> Unit) {
         WorkoutScreen(userId, workout, navigateTo)
     }
 }

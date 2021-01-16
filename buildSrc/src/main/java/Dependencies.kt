@@ -6,14 +6,14 @@ import Versions.kotlinCoroutine
 import Versions.lifecycleVersion
 
 object Versions {
-    const val composeVersion = "1.4.0"
-    const val compose = "1.0.0-alpha04"
-    const val kotlin = "1.4.10"
+    const val composeVersion = "1.4.21"
+    const val compose = "1.0.0-alpha10"
+    const val kotlin = "1.4.21"
     const val kotlinCoroutine = "1.4.0"
     const val targetSdk = 29
     const val buildVersion = "30.0.2"
     const val lifecycleVersion = "2.2.0"
-    const val koin = "2.2.0-rc-3"
+    const val koin = "2.2.1"
 }
 
 object Compose {
@@ -25,7 +25,7 @@ object Compose {
     const val materialIconsExt =
         "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
-    const val tooling = "androidx.ui:ui-tooling:${Versions.compose}"
+    const val tooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
 }
 
 object Android {

@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("android.extensions")
+    id("kotlin-parcelize")
 }
 
 apply(from = rootProject.file("gradle/configure-android.gradle"))

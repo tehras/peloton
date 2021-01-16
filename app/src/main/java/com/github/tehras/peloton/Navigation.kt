@@ -19,7 +19,7 @@ interface Screen : Parcelable {
         get() = true
 
     @Composable
-    fun compose(navigateTo: (Screen) -> Unit)
+    fun Compose(navigateTo: (Screen) -> Unit)
 }
 
 /**

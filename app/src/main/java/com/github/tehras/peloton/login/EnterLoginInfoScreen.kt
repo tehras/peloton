@@ -1,27 +1,24 @@
 package com.github.tehras.peloton.login
 
 import androidx.compose.foundation.ScrollableColumn
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.ExperimentalFocus
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.github.tehras.peloton.R
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalMaterialApi
-@ExperimentalFocus
 @ExperimentalCoroutinesApi
 @Composable
 fun EnterLoginInfoScreen(
@@ -30,12 +27,12 @@ fun EnterLoginInfoScreen(
 ) {
     val state = loginViewModel.loginState.collectAsState()
 
-    var usernameField by remember { mutableStateOf(TextFieldValue()) }
-    var passwordField by remember { mutableStateOf(TextFieldValue()) }
+    var usernameField by remember { mutableStateOf("") }
+    var passwordField by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
 
     val errorState = state.value as? LoginState.LoginError
-    val enableSubmitButton = usernameField.text.isNotEmpty() && passwordField.text.isNotEmpty()
+    val enableSubmitButton = usernameField.isNotEmpty() && passwordField.isNotEmpty()
     val showLoading = state.value is LoginState.SubmittingInfo
 
     if (state.value is LoginState.FinishedSuccessfully) {
@@ -53,43 +50,42 @@ fun EnterLoginInfoScreen(
             text = stringResource(id = R.string.enter_your_information),
             style = MaterialTheme.typography.body2.copy(color = MaterialTheme.colors.secondary),
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(bottom = 24.dp, start = 16.dp, end = 16.dp)
+            modifier = Modifier
+                .padding(bottom = 24.dp, start = 16.dp, end = 16.dp)
                 .align(Alignment.CenterHorizontally)
         )
-
         OutlinedTextField(
             label = { Text(text = stringResource(id = R.string.username_label)) },
             value = usernameField,
-            imeAction = ImeAction.Next,
             onImeActionPerformed = { action, _ ->
                 if (action == ImeAction.Next) {
                     focusRequester.requestFocus()
                 }
             },
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
             onValueChange = { usernameField = it }
         )
         OutlinedTextField(
             modifier = focusRequesterModifier,
             label = { Text(text = stringResource(id = R.string.password_label)) },
             value = passwordField,
-            imeAction = ImeAction.Done,
             onImeActionPerformed = { action, softwareController ->
                 if (action == ImeAction.Done) {
                     softwareController?.hideSoftwareKeyboard()
                 }
             },
             visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             onValueChange = { passwordField = it }
         )
-
         Column(modifier = Modifier.height(60.dp)) {
             Button(
                 modifier = Modifier.padding(top = 24.dp),
                 enabled = enableSubmitButton && !showLoading,
                 onClick = {
                     loginViewModel.authenticate(
-                        username = usernameField.text,
-                        password = passwordField.text
+                        username = usernameField,
+                        password = passwordField
                     )
                 }
             ) {

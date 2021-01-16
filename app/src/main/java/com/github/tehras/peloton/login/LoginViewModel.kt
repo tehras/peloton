@@ -33,6 +33,7 @@ sealed class LoginState {
     object EnteringInfo : LoginState()
     object SubmittingInfo : LoginState()
     object FinishedSuccessfully : LoginState()
-    data class LoginError(val message: String = "Could not authenticate at this time.") :
-        LoginState()
+    data class LoginError(
+        val message: String = "Could not authenticate at this time."
+    ) : LoginState()
 }

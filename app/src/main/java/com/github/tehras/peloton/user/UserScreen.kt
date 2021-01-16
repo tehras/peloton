@@ -2,7 +2,6 @@ package com.github.tehras.peloton.user
 
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.lazy.ExperimentalLazyDsl
 import androidx.compose.material.BottomDrawerLayout
 import androidx.compose.material.BottomDrawerValue.Closed
 import androidx.compose.material.rememberBottomDrawerState
@@ -23,7 +22,6 @@ import com.github.tehras.peloton.workout.list.Workout
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
-@ExperimentalLazyDsl
 @FlowPreview
 @ExperimentalCoroutinesApi
 @Composable

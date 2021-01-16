@@ -1,5 +1,6 @@
 package com.github.tehras.data.client
 
+import android.util.Log
 import com.github.tehras.data.auth.AuthRepo
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -39,7 +40,10 @@ object RetrofitClient {
                     .addHeader("peloton-platform", "android")
                     .build()
 
-                chain.proceed(request)
+                val response = chain.proceed(request)
+                Log.e("NetworkResponse", "response :: $response")
+
+                response
             }
             .build()
 

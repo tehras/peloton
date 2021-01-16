@@ -1,24 +1,22 @@
 package com.github.tehras.peloton.home
 
-import androidx.compose.foundation.lazy.ExperimentalLazyDsl
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.shared.LoadingScreen
 import com.github.tehras.peloton.user.UserScreen
-import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.asFlow
-import org.koin.androidx.compose.inject
+import kotlinx.parcelize.Parcelize
+import org.koin.androidx.compose.getViewModel
 
-@ExperimentalLazyDsl
 @FlowPreview
 @ExperimentalCoroutinesApi
 @Composable
 fun HomeScreen(navigateTo: (Screen) -> Unit) {
-    val homeViewModel: HomeViewModel by inject()
+    val homeViewModel: HomeViewModel = getViewModel()
 
     val state: State<HomeState> = homeViewModel.homeDataFlow.asFlow()
         .collectAsState(initial = HomeState.Loading)
@@ -31,11 +29,10 @@ fun HomeScreen(navigateTo: (Screen) -> Unit) {
 
 @Parcelize
 object Home : Screen {
-    @ExperimentalLazyDsl
     @FlowPreview
     @ExperimentalCoroutinesApi
     @Composable
-    override fun compose(navigateTo: (Screen) -> Unit) {
+    override fun Compose(navigateTo: (Screen) -> Unit) {
         HomeScreen(navigateTo)
     }
 }

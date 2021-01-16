@@ -1,6 +1,5 @@
 package com.github.tehras.peloton.followers.list
 
-import androidx.compose.foundation.lazy.ExperimentalLazyDsl
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -12,9 +11,8 @@ import com.github.tehras.peloton.overview.Overview
 import com.github.tehras.peloton.shared.LoadingScreen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import org.koin.androidx.compose.inject
+import org.koin.androidx.compose.getViewModel
 
-@ExperimentalLazyDsl
 @ExperimentalCoroutinesApi
 @FlowPreview
 @Composable
@@ -22,7 +20,7 @@ fun FollowingListScreen(
     userId: String,
     navigateTo: (Screen) -> Unit
 ) {
-    val followersListViewModel: FollowersListViewModel by inject()
+    val followersListViewModel: FollowersListViewModel = getViewModel()
 
     val state: State<FollowersState> = followersListViewModel.followersState
         .collectAsState(initial = Loading)

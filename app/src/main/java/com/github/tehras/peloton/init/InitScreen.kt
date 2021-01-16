@@ -13,15 +13,15 @@ import com.github.tehras.peloton.R
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.home.Home
 import com.github.tehras.peloton.login.Login
-import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import org.koin.androidx.compose.inject
+import kotlinx.parcelize.Parcelize
+import org.koin.androidx.compose.getViewModel
 
 @ExperimentalCoroutinesApi
 @Composable
 fun InitScreen(navigateTo: (Screen) -> Unit) {
-    val initViewModel: InitViewModel by inject()
+    val initViewModel: InitViewModel = getViewModel()
 
     val state = initViewModel.onEvent.collectAsState()
 
@@ -31,7 +31,7 @@ fun InitScreen(navigateTo: (Screen) -> Unit) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(asset = vectorResource(id = R.drawable.ic_launcher_foreground))
+            Image(imageVector = vectorResource(id = R.drawable.ic_launcher_foreground))
         }
         InitState.UserDataNotFound -> navigateTo(Login)
         InitState.UserDataReady -> navigateTo(Home)
@@ -43,7 +43,7 @@ object Initialize : Screen {
     @FlowPreview
     @ExperimentalCoroutinesApi
     @Composable
-    override fun compose(navigateTo: (Screen) -> Unit) {
+    override fun Compose(navigateTo: (Screen) -> Unit) {
         InitScreen(navigateTo)
     }
 }

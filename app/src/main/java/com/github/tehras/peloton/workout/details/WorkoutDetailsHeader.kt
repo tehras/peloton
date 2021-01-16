@@ -1,6 +1,5 @@
 package com.github.tehras.peloton.workout.details
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.ConstraintLayout
 import androidx.compose.foundation.layout.Dimension
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,7 +19,8 @@ import com.github.tehras.peloton.utils.toDate
 @Composable
 fun WorkoutDetailsHeader(workout: WorkoutData) {
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(horizontal = 12.dp, vertical = 2.dp)
     ) {
         ConstraintLayout(modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {

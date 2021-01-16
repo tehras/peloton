@@ -19,7 +19,7 @@ fun AppContent(navigationViewModel: NavigationViewModel) {
         current = navigationViewModel.currentScreen,
         modifier = Modifier.fillMaxSize()
     ) { screen ->
-        screen.compose { newScreen ->
+        screen.Compose { newScreen ->
             navigationViewModel.navigateTo(newScreen)
         }
     }

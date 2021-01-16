@@ -8,11 +8,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawShadow
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import coil.transform.CircleCropTransformation
 import com.github.tehras.peloton.common.CoilImage
-
 
 @Composable
 fun Avatar(
@@ -27,7 +26,7 @@ fun Avatar(
                 border = BorderStroke(4.dp, color = MaterialTheme.colors.background),
                 shape = CircleShape
             )
-            .drawShadow(
+            .shadow(
                 elevation = 2.dp,
                 shape = CircleShape,
                 clip = false

@@ -1,11 +1,10 @@
 package com.github.tehras.peloton.workout.details
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.ExperimentalLazyDsl
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,7 +16,6 @@ import com.github.tehras.peloton.R
 import com.github.tehras.peloton.common.CoilImage
 import com.github.tehras.peloton.utils.formatDecimal
 
-@ExperimentalLazyDsl
 @Composable
 fun WorkoutLeaderboardAndAchievements(workout: WorkoutData) {
     LazyRow(

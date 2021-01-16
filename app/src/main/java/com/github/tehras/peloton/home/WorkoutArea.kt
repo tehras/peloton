@@ -1,12 +1,12 @@
 package com.github.tehras.peloton.home
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -28,7 +28,8 @@ fun WorkoutArea(
 ) {
     Card(
         elevation = 2.dp,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .background(color = MaterialTheme.colors.background)
             .padding(horizontal = 12.dp)
     ) {
@@ -81,7 +82,8 @@ private fun WorkoutItem(
 ) {
     Column(
         horizontalAlignment = CenterHorizontally,
-        modifier = modifier.padding(8.dp)
+        modifier = modifier
+            .padding(8.dp)
             .fillMaxSize()
     ) {
         val nameFontWeight = if (workout.count == 0) {
