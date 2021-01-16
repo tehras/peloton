@@ -1,5 +1,6 @@
 package com.github.tehras.peloton.home
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.getViewModel
 
+@ExperimentalMaterialApi
 @FlowPreview
 @ExperimentalCoroutinesApi
 @Composable
@@ -29,6 +31,7 @@ fun HomeScreen(navigateTo: (Screen) -> Unit) {
 
 @Parcelize
 object Home : Screen {
+    @ExperimentalMaterialApi
     @FlowPreview
     @ExperimentalCoroutinesApi
     @Composable

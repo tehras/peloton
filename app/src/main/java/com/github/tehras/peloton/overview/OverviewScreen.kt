@@ -1,5 +1,6 @@
 package com.github.tehras.peloton.overview
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.compose.getViewModel
 
+@ExperimentalMaterialApi
 @FlowPreview
 @ExperimentalCoroutinesApi
 @Composable
@@ -38,6 +40,7 @@ data class Overview(val userId: String) : Screen {
     override val isTopScreen: Boolean
         get() = false
 
+    @ExperimentalMaterialApi
     @ExperimentalCoroutinesApi
     @FlowPreview
     @Composable
