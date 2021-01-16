@@ -2,13 +2,12 @@ package com.github.tehras.peloton.user
 
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.BottomDrawerLayout
-import androidx.compose.material.BottomDrawerValue.Closed
-import androidx.compose.material.rememberBottomDrawerState
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.unit.dp
 import com.github.tehras.data.data.CalendarResponse
 import com.github.tehras.data.data.User
 import com.github.tehras.peloton.Screen
@@ -22,6 +21,7 @@ import com.github.tehras.peloton.workout.list.Workout
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
+@ExperimentalMaterialApi
 @FlowPreview
 @ExperimentalCoroutinesApi
 @Composable
@@ -31,37 +31,45 @@ fun UserScreen(
     navigateTo: (Screen) -> Unit
 ) {
     val homeBottomSheetState = remember { mutableStateOf<HomeBottomSheetState>(Empty) }
-    val drawerState = rememberBottomDrawerState(Closed) { newState ->
+
+    val drawerState = rememberBottomSheetState(BottomSheetValue.Collapsed) { newState ->
         when (newState) {
-            Closed -> homeBottomSheetState.value = Empty
-            else -> Unit
+            BottomSheetValue.Collapsed -> homeBottomSheetState.value = Empty
+            BottomSheetValue.Expanded -> Unit // do nothing.
         }
 
         true
     }
+    val scaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = drawerState
+    )
 
-    BottomDrawerLayout(
-        drawerState = drawerState,
-        gesturesEnabled = homeBottomSheetState.value !is Empty,
-        bodyContent = {
-            Column {
-                HomeContent(user, calendarResponse, homeBottomSheetState, navigateTo)
-            }
-        },
-        drawerContent = {
+    BottomSheetScaffold(
+        scaffoldState = scaffoldState,
+        sheetGesturesEnabled = homeBottomSheetState.value != Empty,
+        sheetPeekHeight = 0.dp,
+        sheetContent = {
             when (homeBottomSheetState.value) {
-                Empty -> if (!drawerState.isClosed) drawerState.close()
-                Followers -> {
-                    drawerState.open()
-                    FollowersListScreen(user.id, navigateTo)
-                }
-                Following -> {
-                    drawerState.open()
-                    FollowingListScreen(user.id, navigateTo)
-                }
+                Followers -> FollowersListScreen(user.id, navigateTo)
+                Following -> FollowingListScreen(user.id, navigateTo)
+                Empty -> Unit // Leave empty
             }
         }
-    )
+    ) {
+        BodyContent(user, calendarResponse, homeBottomSheetState, navigateTo)
+    }
+}
+
+@Composable
+private fun BodyContent(
+    user: User,
+    calendarResponse: CalendarResponse?,
+    homeBottomSheetState: MutableState<HomeBottomSheetState>,
+    navigateTo: (Screen) -> Unit
+) {
+    Column {
+        HomeContent(user, calendarResponse, homeBottomSheetState, navigateTo)
+    }
 }
 
 @Composable

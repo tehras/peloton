@@ -88,7 +88,6 @@ class NavigationViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     @MainThread
     fun onBack(): Boolean {
         val wasHandled = !currentScreen.isTopScreen
-        Log.e("TARAS", "$currentScreen - wasHandled $wasHandled")
         if (wasHandled) {
             // Pop the current item.
             if (backStack.isNotEmpty()) backStack.removeLast()

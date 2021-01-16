@@ -41,7 +41,6 @@ object RetrofitClient {
                     .build()
 
                 val response = chain.proceed(request)
-                Log.e("NetworkResponse", "response :: $response")
 
                 response
             }
