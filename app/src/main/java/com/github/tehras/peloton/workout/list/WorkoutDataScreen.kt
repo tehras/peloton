@@ -41,7 +41,7 @@ fun WorkoutDataScreen(workoutsData: WorkoutsState.Success, navigateTo: (Screen) 
 }
 
 @Composable
-fun WorkoutItem(workout: WorkoutDisplayData, workoutSelected: () -> Unit) {
+private fun WorkoutItem(workout: WorkoutDisplayData, workoutSelected: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

@@ -13,11 +13,11 @@ import org.koin.dsl.module
 
 @ExperimentalCoroutinesApi
 val viewModelsModule = module {
-    viewModel { HomeViewModel(get()) }
-    viewModel { LoginViewModel(get()) }
-    viewModel { InitViewModel(get()) }
-    viewModel { FollowersListViewModel(get()) }
-    viewModel { WorkoutsViewModel(get(), get()) }
-    viewModel { WorkoutDetailsViewModel(get(), get()) }
-    viewModel { OverviewViewModel(get()) }
+  viewModel { HomeViewModel(get()) }
+  viewModel { LoginViewModel(get()) }
+  viewModel { InitViewModel(get()) }
+  viewModel { FollowersListViewModel(get()) }
+  viewModel { WorkoutsViewModel(get(), get()) }
+  viewModel { WorkoutDetailsViewModel(get(), get()) }
+  viewModel { OverviewViewModel(get()) }
 }
