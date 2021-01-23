@@ -40,7 +40,7 @@ object Android {
 }
 
 object Charts {
-  const val line = "com.github.tehras.charts:bar:$chartsVersion"
+  const val line = "com.github.tehras.charts:line:$chartsVersion"
   const val common = "com.github.tehras.charts:common:$chartsVersion"
 }
 

@@ -12,6 +12,7 @@ fun WorkoutDetailsSuccessScreen(
         WorkoutLeaderboardAndAchievements(workout = workout)
         WorkoutDetailsOutputs(workout = workout)
         WorkoutDetailsDescription(workout = workout)
+        WorkoutDetailsPerformance(workout = workout)
     }
 }
 
