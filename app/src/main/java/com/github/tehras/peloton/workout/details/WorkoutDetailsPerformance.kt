@@ -1,6 +1,7 @@
 package com.github.tehras.peloton.workout.details
 
 import android.util.Log
+import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
@@ -77,7 +78,7 @@ fun WorkoutDetailsGraph(metric: Metric, secondsSincePedalingStart: List<Int>) {
           .height(100.dp)
           .padding(horizontal = 12.dp, vertical = 12.dp),
         lineChartData = metric.toChart(secondsSincePedalingStart),
-        animation = tween(durationMillis = 1000, delayMillis = 250, easing = LinearEasing),
+        animation = tween(durationMillis = 750, delayMillis = 100, easing = FastOutLinearInEasing),
         lineDrawer = SolidLineDrawer(
           thickness = 1.dp,
           color = MaterialTheme.colors.primary
