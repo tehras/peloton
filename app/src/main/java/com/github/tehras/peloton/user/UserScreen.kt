@@ -1,10 +1,14 @@
 package com.github.tehras.peloton.user
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.*
+import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetValue.Collapsed
 import androidx.compose.material.BottomSheetValue.Expanded
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.rememberBottomSheetScaffoldState
+import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -18,8 +22,9 @@ import com.github.tehras.peloton.followers.list.FollowingListScreen
 import com.github.tehras.peloton.home.CalendarArea
 import com.github.tehras.peloton.home.HeaderArea
 import com.github.tehras.peloton.home.WorkoutArea
-import com.github.tehras.peloton.user.HomeBottomSheetState.*
-import com.github.tehras.peloton.user.SlideUpSheetState.SlideUpSheetValue
+import com.github.tehras.peloton.user.HomeBottomSheetState.Empty
+import com.github.tehras.peloton.user.HomeBottomSheetState.Followers
+import com.github.tehras.peloton.user.HomeBottomSheetState.Following
 import com.github.tehras.peloton.workout.list.Workout
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -35,7 +40,10 @@ fun UserScreen(
 ) {
   val homeBottomSheetState = remember { mutableStateOf<HomeBottomSheetState>(Empty) }
 
-  val drawerState = rememberBottomSheetState(Collapsed) { newState ->
+  val drawerState = rememberBottomSheetState(
+    initialValue = Collapsed,
+    animationSpec = tween()
+  ) { newState ->
     when (newState) {
       Collapsed -> homeBottomSheetState.value = Empty
       Expanded -> Unit // do nothing.
@@ -43,45 +51,28 @@ fun UserScreen(
 
     true
   }
-  val sheetState = rememberSlideUpSheetState(SlideUpSheetValue.Collapsed) { newState ->
-    when (newState) {
-      SlideUpSheetValue.Collapsed -> homeBottomSheetState.value = Empty
-      SlideUpSheetValue.Expanded -> Unit
-    }
-
-    true
-  }
-  rememberBottomSheetScaffoldState(
+  val scaffoldState = rememberBottomSheetScaffoldState(
     bottomSheetState = drawerState
   )
 
-  SlideUpScreen(
+  BottomSheetScaffold(
+    scaffoldState = scaffoldState,
+    sheetGesturesEnabled = homeBottomSheetState.value != Empty,
+    sheetPeekHeight = 0.dp,
     sheetContent = {
       when (homeBottomSheetState.value) {
-        Followers -> FollowersListScreen(user.id, navigateTo)
-        Following -> FollowingListScreen(user.id, navigateTo)
+        Followers -> FollowersListScreen(user.id, navigateTo) {
+          drawerState.expand()
+        }
+        Following -> FollowingListScreen(user.id, navigateTo) {
+          drawerState.expand()
+        }
         Empty -> Unit // Leave empty
       }
-    },
-    sheetState = sheetState,
-    sheetGesturesEnabled = homeBottomSheetState.value != Empty
+    }
   ) {
     BodyContent(user, calendarResponse, homeBottomSheetState, navigateTo)
   }
-  // BottomSheetScaffold(
-  //     scaffoldState = scaffoldState,
-  //     sheetGesturesEnabled = homeBottomSheetState.value != Empty,
-  //     sheetPeekHeight = 0.dp,
-  //     sheetContent = {
-  //         when (homeBottomSheetState.value) {
-  //             Followers -> FollowersListScreen(user.id, navigateTo)
-  //             Following -> FollowingListScreen(user.id, navigateTo)
-  //             Empty -> Unit // Leave empty
-  //         }
-  //     }
-  // ) {
-  //   BodyContent(user, calendarResponse, homeBottomSheetState, navigateTo)
-  // }
 }
 
 @Composable
