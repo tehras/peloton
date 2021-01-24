@@ -4,20 +4,29 @@ import android.util.Log
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.tehras.charts.line.LineChart
@@ -27,7 +36,12 @@ import com.github.tehras.charts.line.renderer.line.SolidLineDrawer
 import com.github.tehras.charts.line.renderer.point.NoPointDrawer
 import com.github.tehras.charts.line.renderer.xaxis.SimpleXAxisDrawer
 import com.github.tehras.charts.line.renderer.yaxis.SimpleYAxisDrawer
+import com.github.tehras.charts.piechart.PieChart
+import com.github.tehras.charts.piechart.PieChartData
+import com.github.tehras.charts.piechart.PieChartData.Slice
+import com.github.tehras.charts.piechart.renderer.SimpleSliceDrawer
 import com.github.tehras.data.data.Metric
+import com.github.tehras.data.data.Zone
 import com.github.tehras.peloton.R
 import com.github.tehras.peloton.utils.formatDecimal
 import kotlin.math.roundToInt
@@ -40,7 +54,7 @@ fun WorkoutDetailsPerformance(workout: WorkoutData) {
 }
 
 @Composable
-fun WorkoutDetailsGraph(metric: Metric, secondsSincePedalingStart: List<Int>) {
+private fun WorkoutDetailsGraph(metric: Metric, secondsSincePedalingStart: List<Int>) {
   Card(
     modifier = Modifier
       .padding(horizontal = 12.dp, vertical = 4.dp)
@@ -101,8 +115,70 @@ fun WorkoutDetailsGraph(metric: Metric, secondsSincePedalingStart: List<Int>) {
           }
         )
       )
+      metric.zones?.let { zones ->
+        WorkoutZones(
+          modifier = Modifier.padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 12.dp),
+          zones = zones
+        )
+      }
     }
   }
+}
+
+@Composable
+private fun WorkoutZones(
+  modifier: Modifier,
+  zones: List<Zone>
+) {
+  Row(verticalAlignment = Alignment.CenterVertically) {
+    PieChart(
+      pieChartData = zones.toData(),
+      modifier = modifier.size(80.dp),
+      sliceDrawer = SimpleSliceDrawer(
+        sliceThickness = 30f
+      )
+    )
+    Column(modifier = Modifier.padding(start = 12.dp)) {
+      val totalDuration = zones.sumBy { it.duration }
+
+      zones.forEachIndexed { index, zone ->
+        if (zone.duration > 0) {
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Canvas(Modifier.size(8.dp)) {
+              drawIntoCanvas {
+                drawRoundRect(
+                  color = ZoneColors.zoneColors[index],
+                  size = Size(width = 8.dp.toPx(), height = 8.dp.toPx()),
+                  cornerRadius = CornerRadius(2.dp.toPx())
+                )
+              }
+            }
+            Text(
+              modifier = Modifier.padding(start = 8.dp),
+              text = "${zone.display_name} - ${zone.range}",
+              style = MaterialTheme.typography.caption
+            )
+            Text(
+              modifier = Modifier.padding(start = 4.dp),
+              text = "(${((zone.duration * 100.0) / totalDuration).formatDecimal()}%)",
+              style = MaterialTheme.typography.caption.copy(fontWeight = FontWeight.Bold)
+            )
+          }
+        }
+      }
+    }
+  }
+}
+
+private fun List<Zone>.toData(): PieChartData {
+  val slices = this.mapIndexed { index, zone ->
+    Slice(
+      value = zone.duration.toFloat(),
+      color = ZoneColors.zoneColors[index]
+    )
+  }
+
+  return PieChartData(slices = slices)
 }
 
 private fun Metric.toChart(
@@ -110,7 +186,6 @@ private fun Metric.toChart(
 ): LineChartData {
   val points = values
     .mapIndexed { index, value ->
-      Log.e("TARAS", "seconds $seconds_since_pedaling_start")
       val label = seconds_since_pedaling_start[index].toMinutes()
 
       Point(value = value.toFloat(), label = label)

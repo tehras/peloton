@@ -22,5 +22,16 @@ data class Metric(
   val display_unit: String,
   val max_value: Double,
   val average_value: Double,
-  val values: List<Double>
+  val values: List<Double>,
+  val zones: List<Zone>? = null
+)
+
+@Serializable
+data class Zone(
+  val display_name: String,
+  val slug: String,
+  val range: String,
+  val duration: Int,
+  val max_value: Int,
+  val min_value: Int
 )
