@@ -99,15 +99,15 @@ private fun WorkoutDetailsGraph(metric: Metric, secondsSincePedalingStart: List<
         ),
         pointDrawer = NoPointDrawer,
         xAxisDrawer = SimpleXAxisDrawer(
-          axisLineColor = Color.White,
+          axisLineColor = MaterialTheme.colors.onBackground,
           labelRatio = secondsSincePedalingStart.size / 10, // We mainly just want around 10 labels.
           labelTextSize = 9.sp,
-          labelTextColor = Color.White,
+          labelTextColor = MaterialTheme.colors.onBackground,
           axisLineThickness = 1.dp
         ),
         yAxisDrawer = SimpleYAxisDrawer(
-          axisLineColor = Color.White,
-          labelTextColor = Color.White,
+          axisLineColor = MaterialTheme.colors.onBackground,
+          labelTextColor = MaterialTheme.colors.onBackground,
           labelTextSize = 9.sp,
           axisLineThickness = 1.dp,
           labelValueFormatter = { value ->
