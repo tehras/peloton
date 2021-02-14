@@ -14,7 +14,6 @@ dependencies {
     implementation(Android.coreKtx)
     implementation(Android.lifecycleExt)
     implementation(Android.viewModelKtx)
-    implementation(Charts.common)
     implementation(Charts.line)
     implementation(Charts.pie)
     implementation(Compose.core)
