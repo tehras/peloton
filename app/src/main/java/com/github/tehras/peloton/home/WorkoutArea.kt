@@ -2,7 +2,11 @@ package com.github.tehras.peloton.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
@@ -22,92 +26,93 @@ import com.github.tehras.peloton.common.Grid
 
 @Composable
 fun WorkoutArea(
-    data: User,
-    allWorkoutsClicked: () -> Unit,
-    workoutClicked: (String) -> Unit
+  data: User,
+  allWorkoutsClicked: () -> Unit,
+  workoutClicked: (String) -> Unit
 ) {
-    Card(
-        elevation = 2.dp,
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = MaterialTheme.colors.background)
-            .padding(horizontal = 12.dp)
-    ) {
-        Column {
-            Text(
-                text = stringResource(id = R.string.workout_title, data.total_workouts),
-                style = MaterialTheme.typography.body2,
-                modifier = Modifier.padding(
-                    horizontal = 8.dp,
-                    vertical = 12.dp
-                )
-            )
-            Divider()
-            val comparator = compareByDescending<User.Workout> { it.count }
-                .thenBy { it.name }
-            Grid(
-                data = data.workouts.sortedWith(comparator),
-                rowSize = 3
-            ) { workout ->
-                val modifier = if (workout.count > 0) {
-                    Modifier.clickable(onClick = { workoutClicked(workout.name) })
-                } else {
-                    Modifier
-                }
-                WorkoutItem(
-                    modifier = modifier,
-                    workout = workout
-                )
-            }
-            Divider()
-            Text(
-                text = stringResource(id = R.string.workout_view_all),
-                style = MaterialTheme.typography.body2,
-                modifier = Modifier
-                    .clickable(onClick = allWorkoutsClicked)
-                    .padding(
-                        horizontal = 8.dp,
-                        vertical = 12.dp
-                    )
-                    .fillMaxWidth()
-            )
+  Card(
+    elevation = 2.dp,
+    modifier = Modifier
+      .fillMaxWidth()
+      .background(color = MaterialTheme.colors.background)
+      .padding(horizontal = 12.dp)
+  ) {
+    Column {
+      Text(
+        text = stringResource(id = R.string.workout_title, data.total_workouts),
+        style = MaterialTheme.typography.body2,
+        modifier = Modifier.padding(
+          horizontal = 8.dp,
+          vertical = 12.dp
+        )
+      )
+      Divider()
+      val comparator = compareByDescending<User.Workout> { it.count }
+        .thenBy { it.name }
+      Grid(
+        data = data.workouts.sortedWith(comparator),
+        rowSize = 3
+      ) { workout ->
+        val modifier = if (workout.count > 0) {
+          Modifier.clickable(onClick = { workoutClicked(workout.name) })
+        } else {
+          Modifier
         }
+        WorkoutItem(
+          modifier = modifier,
+          workout = workout
+        )
+      }
+      Divider()
+      Text(
+        text = stringResource(id = R.string.workout_view_all),
+        style = MaterialTheme.typography.body2,
+        modifier = Modifier
+          .clickable(onClick = allWorkoutsClicked)
+          .padding(
+            horizontal = 8.dp,
+            vertical = 12.dp
+          )
+          .fillMaxWidth()
+      )
     }
+  }
 }
 
 @Composable
 private fun WorkoutItem(
-    modifier: Modifier = Modifier,
-    workout: User.Workout
+  modifier: Modifier = Modifier,
+  workout: User.Workout
 ) {
-    Column(
-        horizontalAlignment = CenterHorizontally,
-        modifier = modifier
-            .padding(8.dp)
-            .fillMaxSize()
-    ) {
-        val nameFontWeight = if (workout.count == 0) {
-            FontWeight.Light
-        } else {
-            FontWeight.Normal
-        }
-        CoilImage(
-            data = workout.icon_url,
-            modifier = Modifier.size(24.dp),
-            colorFilter = ColorFilter(
-                color = MaterialTheme.colors.secondary,
-                blendMode = BlendMode.SrcAtop
-            )
-        )
-        Text(
-            text = workout.name,
-            style = MaterialTheme.typography.caption,
-            fontWeight = nameFontWeight
-        )
-        Text(
-            text = workout.count.toString(),
-            style = MaterialTheme.typography.body2,
-            fontWeight = nameFontWeight
-        )
+  Column(
+    horizontalAlignment = CenterHorizontally,
+    modifier = modifier
+      .padding(8.dp)
+      .fillMaxSize()
+  ) {
+    val nameFontWeight = if (workout.count == 0) {
+      FontWeight.Light
+    } else {
+      FontWeight.Normal
     }
+    CoilImage(
+      data = workout.icon_url,
+      contentDescription = "Image for ${workout.name}",
+      modifier = Modifier.size(24.dp),
+      colorFilter = ColorFilter.tint(
+        color = MaterialTheme.colors.secondary,
+        blendMode = BlendMode.SrcAtop
+      )
+    )
+    Text(
+      text = workout.name,
+      style = MaterialTheme.typography.caption,
+      fontWeight = nameFontWeight
+    )
+    Text(
+      text = workout.count.toString(),
+      style = MaterialTheme.typography.body2,
+      fontWeight = nameFontWeight
+    )
+  }
 }

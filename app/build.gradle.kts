@@ -9,9 +9,12 @@ apply(from = rootProject.file("gradle/configure-compose.gradle"))
 
 dependencies {
     implementation(Android.activityKtx)
+    implementation(Android.activityCompose)
     implementation(Android.appcompat)
     implementation(Android.coil)
+    implementation(Android.constraint)
     implementation(Android.coreKtx)
+    implementation(Android.lifecycleCompose)
     implementation(Android.lifecycleExt)
     implementation(Android.viewModelKtx)
     implementation(Charts.line)

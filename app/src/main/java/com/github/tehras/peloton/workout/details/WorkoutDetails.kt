@@ -1,9 +1,9 @@
 package com.github.tehras.peloton.workout.details
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.onCommit
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.shared.ErrorScreen
 import com.github.tehras.peloton.shared.LoadingScreen
@@ -11,7 +11,7 @@ import com.github.tehras.peloton.workout.details.WorkoutDetailsState.Loading
 import com.github.tehras.peloton.workout.details.WorkoutDetailsState.Success
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.parcelize.Parcelize
-import org.koin.androidx.compose.getViewModel
+import com.github.tehras.peloton.utils.getViewModel
 
 @ExperimentalCoroutinesApi
 @Composable
@@ -21,7 +21,7 @@ fun WorkoutDetailsScreen(
 ) {
   val state: State<WorkoutDetailsState> = viewModel.workoutDetails.collectAsState()
 
-  onCommit(workoutId) {
+  LaunchedEffect(workoutId) {
     viewModel.fetchWorkoutDetails(workoutId = workoutId)
   }
 

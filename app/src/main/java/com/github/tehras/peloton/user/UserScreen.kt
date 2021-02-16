@@ -1,8 +1,9 @@
 package com.github.tehras.peloton.user
 
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetValue.Collapsed
 import androidx.compose.material.BottomSheetValue.Expanded
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.github.tehras.data.data.CalendarResponse
 import com.github.tehras.data.data.User
@@ -94,7 +96,7 @@ private fun HomeContent(
   homeBottomSheetState: MutableState<HomeBottomSheetState>,
   navigateTo: (Screen) -> Unit
 ) {
-  ScrollableColumn {
+  Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
     HeaderArea(
       data = userData,
       followersClicked = {

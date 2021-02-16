@@ -1,18 +1,18 @@
 package com.github.tehras.peloton.followers.list
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.onCommit
 import androidx.compose.ui.res.stringResource
 import com.github.tehras.peloton.R
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.followers.list.FollowersState.Loading
 import com.github.tehras.peloton.overview.Overview
 import com.github.tehras.peloton.shared.LoadingScreenNotFull
+import com.github.tehras.peloton.utils.getViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import org.koin.androidx.compose.getViewModel
 
 @ExperimentalCoroutinesApi
 @FlowPreview
@@ -26,7 +26,7 @@ fun FollowersListScreen(
   val state: State<FollowersState> = followersListViewModel.followersState
     .collectAsState(initial = Loading)
 
-  onCommit(userId) {
+  LaunchedEffect(userId) {
     followersListViewModel.fetchFollowers(userId = userId)
   }
 

@@ -1,15 +1,15 @@
 package com.github.tehras.peloton.workout.list
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.onCommit
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.shared.ErrorScreen
 import com.github.tehras.peloton.shared.LoadingScreen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.parcelize.Parcelize
-import org.koin.androidx.compose.getViewModel
+import com.github.tehras.peloton.utils.getViewModel
 
 @ExperimentalCoroutinesApi
 @Composable
@@ -20,7 +20,7 @@ fun WorkoutScreen(
 ) {
   val workoutsViewModel: WorkoutsViewModel = getViewModel()
 
-  onCommit(userId) {
+  LaunchedEffect(userId) {
     workoutsViewModel.fetchWorkouts(userId = userId, workoutType = workout)
   }
 

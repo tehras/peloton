@@ -16,7 +16,7 @@ fun PelotonApp(navigationViewModel: NavigationViewModel) {
 @Composable
 fun AppContent(navigationViewModel: NavigationViewModel) {
     Crossfade(
-        current = navigationViewModel.currentScreen,
+        targetState = navigationViewModel.currentScreen,
         modifier = Modifier.fillMaxSize()
     ) { screen ->
         screen.Compose { newScreen ->

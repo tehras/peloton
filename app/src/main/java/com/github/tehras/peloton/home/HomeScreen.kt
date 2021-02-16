@@ -2,17 +2,16 @@ package com.github.tehras.peloton.home
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.onCommit
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.shared.LoadingScreen
 import com.github.tehras.peloton.user.UserScreen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.parcelize.Parcelize
-import org.koin.androidx.compose.getViewModel
+import com.github.tehras.peloton.utils.getViewModel
 
 @ExperimentalMaterialApi
 @FlowPreview
@@ -22,7 +21,9 @@ fun HomeScreen(
   navigateTo: (Screen) -> Unit,
   homeViewModel: HomeViewModel = getViewModel()
 ) {
-  onCommit { homeViewModel.fetchData() }
+  LaunchedEffect(Unit) {
+    homeViewModel.fetchData()
+  }
 
   val state: State<HomeState> = homeViewModel.homeDataFlow
     .collectAsState()

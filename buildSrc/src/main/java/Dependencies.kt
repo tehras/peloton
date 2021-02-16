@@ -7,15 +7,15 @@ import Versions.kotlinCoroutine
 import Versions.lifecycleVersion
 
 object Versions {
-  const val composeVersion = "1.4.21"
-  const val compose = "1.0.0-alpha10"
-  const val kotlin = "1.4.21"
+  const val composeVersion = "1.4.30"
+  const val compose = "1.0.0-alpha12"
+  const val kotlin = "1.4.30"
   const val kotlinCoroutine = "1.4.0"
   const val targetSdk = 29
   const val buildVersion = "30.0.2"
   const val lifecycleVersion = "2.2.0"
-  const val koin = "2.2.1"
-  const val chartsVersion = "0.1.6-alpha"
+  const val koin = "2.2.2"
+  const val chartsVersion = "alpha-0.12.0"
 }
 
 object Compose {
@@ -31,12 +31,15 @@ object Compose {
 }
 
 object Android {
-  const val appcompat = "androidx.appcompat:appcompat:1.2.0"
-  const val activityKtx = "androidx.activity:activity-ktx:1.1.0"
+  const val appcompat = "androidx.appcompat:appcompat:1.3.0-alpha02"
+  const val activityCompose = "androidx.activity:activity-compose:1.3.0-alpha02"
+  const val activityKtx = "androidx.activity:activity-ktx:1.3.0-alpha02"
   const val coil = "io.coil-kt:coil:1.0.0-rc3"
+  const val constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha02"
   const val coreKtx = "androidx.core:core-ktx:1.3.2"
   const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion"
   const val lifecycleExt = "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+  const val lifecycleCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha01"
 }
 
 object Charts {

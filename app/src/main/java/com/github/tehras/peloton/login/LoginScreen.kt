@@ -7,7 +7,7 @@ import com.github.tehras.peloton.home.Home
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.parcelize.Parcelize
-import org.koin.androidx.compose.getViewModel
+import com.github.tehras.peloton.utils.getViewModel
 
 @ExperimentalMaterialApi
 @ExperimentalCoroutinesApi

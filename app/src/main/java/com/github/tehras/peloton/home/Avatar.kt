@@ -16,10 +16,12 @@ import com.github.tehras.peloton.common.CoilImage
 @Composable
 fun Avatar(
     url: String,
+    contentDescription: String,
     modifier: Modifier
 ) {
     CoilImage(
         data = url,
+        contentDescription = contentDescription,
         modifier = modifier
             .size(64.dp)
             .border(
