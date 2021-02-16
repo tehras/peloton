@@ -8,10 +8,10 @@ import androidx.compose.runtime.collectAsState
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.shared.LoadingScreen
 import com.github.tehras.peloton.user.UserScreen
+import com.github.tehras.peloton.utils.getViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.parcelize.Parcelize
-import com.github.tehras.peloton.utils.getViewModel
 
 @ExperimentalMaterialApi
 @FlowPreview

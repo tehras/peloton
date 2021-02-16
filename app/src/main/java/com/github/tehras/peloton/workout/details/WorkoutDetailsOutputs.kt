@@ -21,95 +21,95 @@ import com.github.tehras.peloton.utils.format
 
 @Composable
 fun WorkoutDetailsOutputs(workout: WorkoutData) {
-    TotalOutputs(workout.workoutPerformance.summaries)
-    AverageOutputs(workout.workoutPerformance.metrics)
+  TotalOutputs(workout.workoutPerformance.summaries)
+  AverageOutputs(workout.workoutPerformance.metrics)
 }
 
 @Composable
 private fun AverageOutputs(metrics: List<Metric>) {
-    if (metrics.isEmpty()) return
+  if (metrics.isEmpty()) return
 
-    Card(modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp).fillMaxWidth()) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Text(
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                style = MaterialTheme.typography.body1,
-                text = stringResource(id = R.string.workout_details_average_label)
-            )
-            Grid(
-                rowSize = 3,
-                data = metrics
-            ) { metric ->
-                MetricItem(metric = metric)
-            }
-        }
+  Card(modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp).fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+      Text(
+        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+        style = MaterialTheme.typography.body1,
+        text = stringResource(id = R.string.workout_details_average_label)
+      )
+      Grid(
+        rowSize = 3,
+        data = metrics
+      ) { metric ->
+        MetricItem(metric = metric)
+      }
     }
+  }
 }
 
 @Composable
 private fun TotalOutputs(summaries: List<Summary>) {
-    if (summaries.isEmpty()) return
+  if (summaries.isEmpty()) return
 
-    Card(modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp).fillMaxWidth()) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Text(
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                style = MaterialTheme.typography.body1,
-                text = stringResource(id = R.string.workout_details_total_label)
-            )
-            Grid(
-                rowSize = 3,
-                data = summaries
-            ) { summary ->
-                SummaryItem(summary = summary)
-            }
-        }
+  Card(modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp).fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+      Text(
+        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+        style = MaterialTheme.typography.body1,
+        text = stringResource(id = R.string.workout_details_total_label)
+      )
+      Grid(
+        rowSize = 3,
+        data = summaries
+      ) { summary ->
+        SummaryItem(summary = summary)
+      }
     }
+  }
 }
 
 @Composable
 private fun SummaryItem(summary: Summary) {
-    Column(
-        modifier = Modifier
-            .padding(horizontal = 8.dp, vertical = 8.dp)
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        ValueLabel(summary.value.format(), summary.display_unit)
-        Text(
-            text = summary.display_name,
-            style = MaterialTheme.typography.caption
-        )
-    }
+  Column(
+    modifier = Modifier
+      .padding(horizontal = 8.dp, vertical = 8.dp)
+      .fillMaxWidth(),
+    horizontalAlignment = Alignment.CenterHorizontally
+  ) {
+    ValueLabel(summary.value.format(), summary.display_unit)
+    Text(
+      text = summary.display_name,
+      style = MaterialTheme.typography.caption
+    )
+  }
 }
 
 @Composable
 private fun MetricItem(metric: Metric) {
-    Column(
-        modifier = Modifier
-            .padding(horizontal = 8.dp, vertical = 8.dp)
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        ValueLabel(metric.average_value.format(), metric.display_unit)
-        Text(
-            text = metric.display_name,
-            style = MaterialTheme.typography.caption
-        )
-    }
+  Column(
+    modifier = Modifier
+      .padding(horizontal = 8.dp, vertical = 8.dp)
+      .fillMaxWidth(),
+    horizontalAlignment = Alignment.CenterHorizontally
+  ) {
+    ValueLabel(metric.average_value.format(), metric.display_unit)
+    Text(
+      text = metric.display_name,
+      style = MaterialTheme.typography.caption
+    )
+  }
 }
 
 @Composable
 private fun ValueLabel(value: String, label: String) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Text(
-            text = value,
-            style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold)
-        )
-        Text(
-            text = label,
-            style = MaterialTheme.typography.body2,
-            modifier = Modifier.padding(start = 4.dp)
-        )
-    }
+  Row(verticalAlignment = Alignment.CenterVertically) {
+    Text(
+      text = value,
+      style = MaterialTheme.typography.body1.copy(fontWeight = FontWeight.Bold)
+    )
+    Text(
+      text = label,
+      style = MaterialTheme.typography.body2,
+      modifier = Modifier.padding(start = 4.dp)
+    )
+  }
 }

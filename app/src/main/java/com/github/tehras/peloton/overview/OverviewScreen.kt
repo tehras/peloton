@@ -10,10 +10,10 @@ import com.github.tehras.peloton.overview.OverviewState.Loading
 import com.github.tehras.peloton.overview.OverviewState.Success
 import com.github.tehras.peloton.shared.LoadingScreen
 import com.github.tehras.peloton.user.UserScreen
+import com.github.tehras.peloton.utils.getViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.parcelize.Parcelize
-import com.github.tehras.peloton.utils.getViewModel
 
 @ExperimentalMaterialApi
 @FlowPreview

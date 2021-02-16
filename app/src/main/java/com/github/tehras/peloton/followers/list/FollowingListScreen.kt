@@ -10,9 +10,9 @@ import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.followers.list.FollowersState.Loading
 import com.github.tehras.peloton.overview.Overview
 import com.github.tehras.peloton.shared.LoadingScreenNotFull
+import com.github.tehras.peloton.utils.getViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import com.github.tehras.peloton.utils.getViewModel
 
 @ExperimentalCoroutinesApi
 @FlowPreview

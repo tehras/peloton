@@ -9,25 +9,25 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun <T> Grid(
-    data: List<T>,
-    rowSize: Int = 1,
-    itemContent: @Composable BoxScope.(T) -> Unit
+  data: List<T>,
+  rowSize: Int = 1,
+  itemContent: @Composable BoxScope.(T) -> Unit
 ) {
-    val rows = data.windowed(rowSize, rowSize, true)
+  val rows = data.windowed(rowSize, rowSize, true)
 
-    rows.forEach { row ->
-        Row(modifier = Modifier.fillMaxWidth()) {
-            val weight = 1f / rowSize
-            row.forEach { item ->
-                Box(modifier = Modifier.weight(weight = weight)) {
-                    itemContent(item)
-                }
-            }
-            if (row.size < rowSize) {
-                for (i in 0 until (rowSize - row.size)) {
-                    Box(modifier = Modifier.weight(weight = weight))
-                }
-            }
+  rows.forEach { row ->
+    Row(modifier = Modifier.fillMaxWidth()) {
+      val weight = 1f / rowSize
+      row.forEach { item ->
+        Box(modifier = Modifier.weight(weight = weight)) {
+          itemContent(item)
         }
+      }
+      if (row.size < rowSize) {
+        for (i in 0 until (rowSize - row.size)) {
+          Box(modifier = Modifier.weight(weight = weight))
+        }
+      }
     }
+  }
 }

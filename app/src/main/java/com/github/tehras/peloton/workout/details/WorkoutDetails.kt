@@ -7,11 +7,11 @@ import androidx.compose.runtime.collectAsState
 import com.github.tehras.peloton.Screen
 import com.github.tehras.peloton.shared.ErrorScreen
 import com.github.tehras.peloton.shared.LoadingScreen
+import com.github.tehras.peloton.utils.getViewModel
 import com.github.tehras.peloton.workout.details.WorkoutDetailsState.Loading
 import com.github.tehras.peloton.workout.details.WorkoutDetailsState.Success
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.parcelize.Parcelize
-import com.github.tehras.peloton.utils.getViewModel
 
 @ExperimentalCoroutinesApi
 @Composable

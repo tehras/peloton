@@ -17,21 +17,21 @@ import com.github.tehras.peloton.R
 
 @Composable
 fun ErrorScreen(message: String, onRetry: () -> Unit) {
-    Surface(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = message,
-                style = MaterialTheme.typography.body1
-            )
-            TextButton(onClick = onRetry) {
-                Text(text = stringResource(id = R.string.retry))
-            }
-        }
+  Surface(modifier = Modifier.fillMaxSize()) {
+    Column(
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(8.dp),
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.Center
+    ) {
+      Text(
+        text = message,
+        style = MaterialTheme.typography.body1
+      )
+      TextButton(onClick = onRetry) {
+        Text(text = stringResource(id = R.string.retry))
+      }
     }
+  }
 }

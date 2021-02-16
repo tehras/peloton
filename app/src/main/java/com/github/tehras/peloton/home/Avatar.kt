@@ -15,26 +15,26 @@ import com.github.tehras.peloton.common.CoilImage
 
 @Composable
 fun Avatar(
-    url: String,
-    contentDescription: String,
-    modifier: Modifier
+  url: String,
+  contentDescription: String,
+  modifier: Modifier
 ) {
-    CoilImage(
-        data = url,
-        contentDescription = contentDescription,
-        modifier = modifier
-            .size(64.dp)
-            .border(
-                border = BorderStroke(4.dp, color = MaterialTheme.colors.background),
-                shape = CircleShape
-            )
-            .shadow(
-                elevation = 2.dp,
-                shape = CircleShape,
-                clip = false
-            )
-            .padding(2.dp)
-    ) {
-        transformations(CircleCropTransformation())
-    }
+  CoilImage(
+    data = url,
+    contentDescription = contentDescription,
+    modifier = modifier
+      .size(64.dp)
+      .border(
+        border = BorderStroke(4.dp, color = MaterialTheme.colors.background),
+        shape = CircleShape
+      )
+      .shadow(
+        elevation = 2.dp,
+        shape = CircleShape,
+        clip = false
+      )
+      .padding(2.dp)
+  ) {
+    transformations(CircleCropTransformation())
+  }
 }

@@ -14,21 +14,23 @@ import com.github.tehras.peloton.R
 
 @Composable
 fun WorkoutDetailsDescription(workout: WorkoutData) {
-    Card(modifier = Modifier
-        .padding(horizontal = 12.dp, vertical = 4.dp)
-        .fillMaxWidth()) {
-        Column(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-        ) {
-            Text(
-                text = stringResource(id = R.string.workout_details_description_label),
-                style = MaterialTheme.typography.body1
-            )
-            Text(
-                modifier = Modifier.padding(vertical = 8.dp),
-                text = workout.workoutDetails.ride.description,
-                style = MaterialTheme.typography.caption
-            )
-        }
+  Card(
+    modifier = Modifier
+      .padding(horizontal = 12.dp, vertical = 4.dp)
+      .fillMaxWidth()
+  ) {
+    Column(
+      modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+    ) {
+      Text(
+        text = stringResource(id = R.string.workout_details_description_label),
+        style = MaterialTheme.typography.body1
+      )
+      Text(
+        modifier = Modifier.padding(vertical = 8.dp),
+        text = workout.workoutDetails.ride.description,
+        style = MaterialTheme.typography.caption
+      )
     }
+  }
 }

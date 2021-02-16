@@ -1,7 +1,11 @@
 package com.github.tehras.peloton.home
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -14,34 +18,34 @@ import com.github.tehras.peloton.R
 
 @Composable
 fun Followers(
-    user: User,
-    modifier: Modifier,
-    followersClicked: () -> Unit,
-    followingClicked: () -> Unit
+  user: User,
+  modifier: Modifier,
+  followersClicked: () -> Unit,
+  followingClicked: () -> Unit
 ) {
-    Column(modifier = modifier.padding(top = 8.dp)) {
-        Divider()
+  Column(modifier = modifier.padding(top = 8.dp)) {
+    Divider()
 
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp)
-        ) {
-            Text(
-                modifier = Modifier
-                    .clickable(onClick = followersClicked)
-                    .padding(top = 8.dp, bottom = 8.dp),
-                style = MaterialTheme.typography.body2,
-                text = stringResource(id = R.string.followers, user.total_followers)
-            )
-            Text(
-                modifier = Modifier
-                    .clickable(onClick = followingClicked)
-                    .padding(top = 8.dp, bottom = 8.dp),
-                style = MaterialTheme.typography.body2,
-                text = stringResource(id = R.string.following, user.total_following)
-            )
-        }
+    Row(
+      horizontalArrangement = Arrangement.SpaceBetween,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 4.dp)
+    ) {
+      Text(
+        modifier = Modifier
+          .clickable(onClick = followersClicked)
+          .padding(top = 8.dp, bottom = 8.dp),
+        style = MaterialTheme.typography.body2,
+        text = stringResource(id = R.string.followers, user.total_followers)
+      )
+      Text(
+        modifier = Modifier
+          .clickable(onClick = followingClicked)
+          .padding(top = 8.dp, bottom = 8.dp),
+        style = MaterialTheme.typography.body2,
+        text = stringResource(id = R.string.following, user.total_following)
+      )
     }
+  }
 }

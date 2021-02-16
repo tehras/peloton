@@ -8,17 +8,17 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
 class PelotonApp : Application() {
-    @ExperimentalCoroutinesApi
-    override fun onCreate() {
-        super.onCreate()
+  @ExperimentalCoroutinesApi
+  override fun onCreate() {
+    super.onCreate()
 
-        // start koin.
-        startKoin {
-            // Android context.
-            androidContext(this@PelotonApp)
+    // start koin.
+    startKoin {
+      // Android context.
+      androidContext(this@PelotonApp)
 
-            // Init modules.
-            modules(viewModelsModule, apiModule, retrofitModule)
-        }
+      // Init modules.
+      modules(viewModelsModule, apiModule, retrofitModule)
     }
+  }
 }

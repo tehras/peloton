@@ -8,19 +8,19 @@ import com.github.tehras.peloton.ui.PelotonTheme
 
 @Composable
 fun PelotonApp(navigationViewModel: NavigationViewModel) {
-    PelotonTheme {
-        AppContent(navigationViewModel = navigationViewModel)
-    }
+  PelotonTheme {
+    AppContent(navigationViewModel = navigationViewModel)
+  }
 }
 
 @Composable
 fun AppContent(navigationViewModel: NavigationViewModel) {
-    Crossfade(
-        targetState = navigationViewModel.currentScreen,
-        modifier = Modifier.fillMaxSize()
-    ) { screen ->
-        screen.Compose { newScreen ->
-            navigationViewModel.navigateTo(newScreen)
-        }
+  Crossfade(
+    targetState = navigationViewModel.currentScreen,
+    modifier = Modifier.fillMaxSize()
+  ) { screen ->
+    screen.Compose { newScreen ->
+      navigationViewModel.navigateTo(newScreen)
     }
+  }
 }

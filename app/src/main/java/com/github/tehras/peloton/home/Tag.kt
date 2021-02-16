@@ -17,42 +17,42 @@ import com.github.tehras.data.data.User
 
 @Composable
 fun Tag(
-    tags: User.TagInfo?,
-    modifier: Modifier
+  tags: User.TagInfo?,
+  modifier: Modifier
 ) {
-    if (tags == null) {
-        Surface(modifier = modifier) {
+  if (tags == null) {
+    Surface(modifier = modifier) {
 
-        }
-    } else {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier
-                .shadow(
-                    elevation = 2.dp,
-                    shape = CircleShape,
-                    clip = false
-                )
-                .background(
-                    color = MaterialTheme.colors.background,
-                    shape = CircleShape
-                )
-                .padding(top = 2.dp, bottom = 2.dp, start = 6.dp)
-        ) {
-            Text(
-                text = tags.primary_name,
-                style = MaterialTheme.typography.body2,
-                fontStyle = FontStyle.Italic,
-                modifier = Modifier.padding(end = 4.dp)
-            )
-
-            if (tags.total_joined > 1) {
-                Text(
-                    text = "+${tags.total_joined - 1}",
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    style = MaterialTheme.typography.body2,
-                )
-            }
-        }
     }
+  } else {
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+      modifier = modifier
+        .shadow(
+          elevation = 2.dp,
+          shape = CircleShape,
+          clip = false
+        )
+        .background(
+          color = MaterialTheme.colors.background,
+          shape = CircleShape
+        )
+        .padding(top = 2.dp, bottom = 2.dp, start = 6.dp)
+    ) {
+      Text(
+        text = tags.primary_name,
+        style = MaterialTheme.typography.body2,
+        fontStyle = FontStyle.Italic,
+        modifier = Modifier.padding(end = 4.dp)
+      )
+
+      if (tags.total_joined > 1) {
+        Text(
+          text = "+${tags.total_joined - 1}",
+          modifier = Modifier.padding(horizontal = 4.dp),
+          style = MaterialTheme.typography.body2,
+        )
+      }
+    }
+  }
 }

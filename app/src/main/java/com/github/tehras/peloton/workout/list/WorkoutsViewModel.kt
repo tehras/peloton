@@ -13,68 +13,68 @@ import com.github.tehras.peloton.workout.list.WorkoutsState.Loading
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Locale
 
 class WorkoutsViewModel(
-    private val workoutRepo: WorkoutRepo,
-    private val instructorRepo: InstructorRepo
+  private val workoutRepo: WorkoutRepo,
+  private val instructorRepo: InstructorRepo
 ) : ViewModel() {
-    val workoutsState = MutableStateFlow<WorkoutsState>(Loading)
+  val workoutsState = MutableStateFlow<WorkoutsState>(Loading)
 
-    fun fetchWorkouts(userId: String, workoutType: String?) {
-        viewModelScope.launch {
-            workoutsState.emit(Loading)
+  fun fetchWorkouts(userId: String, workoutType: String?) {
+    viewModelScope.launch {
+      workoutsState.emit(Loading)
 
-            val workoutsResponse = async { safeApiCall { workoutRepo.fetchWorkouts(userId) } }
-            val instructorsResponse = async { safeApiCall { instructorRepo.instructors() } }
+      val workoutsResponse = async { safeApiCall { workoutRepo.fetchWorkouts(userId) } }
+      val instructorsResponse = async { safeApiCall { instructorRepo.instructors() } }
 
-            workoutsState.emit(
-                handleOutput(
-                    workoutType,
-                    workoutsResponse.await(),
-                    instructorsResponse.await()
-                )
-            )
-        }
-    }
-
-    private fun handleOutput(
-        workoutType: String?,
-        workoutsResult: ResultWrapper<WorkoutsResponse>,
-        instructorResponse: ResultWrapper<InstructorResponse>
-    ): WorkoutsState {
-        if (workoutsResult !is ResultWrapper.Success<WorkoutsResponse>) {
-            return WorkoutsState.Error(workoutsResult.asErrorMessage())
-        }
-        if (instructorResponse !is ResultWrapper.Success<InstructorResponse>) {
-            return WorkoutsState.Error(instructorResponse.asErrorMessage())
-        }
-
-        return WorkoutsState.Success(
-            totalCount = workoutsResult.value.count,
-            workouts = workoutsResult.value.workouts
-                .filter { workout ->
-                    val doesWorkoutTypeMatch = workoutType?.let {
-                        workout.fitness_discipline == it.toLowerCase(Locale.ROOT)
-                    } ?: true
-
-                    workout.details != null && doesWorkoutTypeMatch
-                }
-                .map {
-                    it.toDisplay(instructors = instructorResponse.value.instructors)
-                }
+      workoutsState.emit(
+        handleOutput(
+          workoutType,
+          workoutsResponse.await(),
+          instructorsResponse.await()
         )
+      )
     }
+  }
+
+  private fun handleOutput(
+    workoutType: String?,
+    workoutsResult: ResultWrapper<WorkoutsResponse>,
+    instructorResponse: ResultWrapper<InstructorResponse>
+  ): WorkoutsState {
+    if (workoutsResult !is ResultWrapper.Success<WorkoutsResponse>) {
+      return WorkoutsState.Error(workoutsResult.asErrorMessage())
+    }
+    if (instructorResponse !is ResultWrapper.Success<InstructorResponse>) {
+      return WorkoutsState.Error(instructorResponse.asErrorMessage())
+    }
+
+    return WorkoutsState.Success(
+      totalCount = workoutsResult.value.count,
+      workouts = workoutsResult.value.workouts
+        .filter { workout ->
+          val doesWorkoutTypeMatch = workoutType?.let {
+            workout.fitness_discipline == it.toLowerCase(Locale.ROOT)
+          } ?: true
+
+          workout.details != null && doesWorkoutTypeMatch
+        }
+        .map {
+          it.toDisplay(instructors = instructorResponse.value.instructors)
+        }
+    )
+  }
 }
 
 sealed class WorkoutsState {
-    object Loading : WorkoutsState()
-    data class Success(
-        val totalCount: Int,
-        val workouts: List<WorkoutDisplayData>
-    ) : WorkoutsState()
+  object Loading : WorkoutsState()
+  data class Success(
+    val totalCount: Int,
+    val workouts: List<WorkoutDisplayData>
+  ) : WorkoutsState()
 
-    data class Error(
-        val message: String
-    ) : WorkoutsState()
+  data class Error(
+    val message: String
+  ) : WorkoutsState()
 }
